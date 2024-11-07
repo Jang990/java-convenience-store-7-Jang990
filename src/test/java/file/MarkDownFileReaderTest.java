@@ -26,13 +26,13 @@ class MarkDownFileReaderTest {
 
     static Stream<Arguments> readingFileOptions() {
         return Stream.of(
-                Arguments.of("classspath:TestProduct.md",
+                Arguments.of("src/test/resources/TestProduct.md",
                         List.of(
                                 Map.of("ID","1", "이름", "콜라"),
                                 Map.of("ID","2", "이름", "컵라면")
                         )
                 ),
-                Arguments.of("classspath:TestPromotions.md",
+                Arguments.of("src/test/resources/TestPromotions.md",
                         List.of(
                                 Map.of("name","탄산2+1", "start_date", "2024-01-01"),
                                 Map.of("name","MD추천상품", "start_date", "2024-12-31")
