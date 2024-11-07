@@ -11,7 +11,8 @@ public class StoreFileReader {
     private static final String HEADER_ELEMENT_SIZE_MISMATCH_MESSAGE = "헤더의 수와 요소의 수가 맞지 않습니다.";
     private static final String IOEXCEPTION_ERROR_MESSAGE = "IOException 발생";
     private static final String FILE_NOT_FOUND_ERROR_MESSAGE = "파일을 찾을 수 없음";
-    private final String ELEMENT_DELIMITER_REGEX = Pattern.quote(",");
+    private static final String NOT_FOUND_HEADER_ERROR_MESSAGE = "헤더가 존재하지 않습니다.";
+    private static final String ELEMENT_DELIMITER_REGEX = Pattern.quote(",");
 
     public List<Map<String, String>> read(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -60,7 +61,7 @@ public class StoreFileReader {
     private List<String> readHeaders(BufferedReader br) throws IOException {
         String headerLine = br.readLine();
         if(headerLine == null || headerLine.isBlank())
-            throw new IllegalArgumentException("헤더가 존재하지 않습니다.");
+            throw new IllegalArgumentException(NOT_FOUND_HEADER_ERROR_MESSAGE);
 
         return Arrays.stream(headerLine.split(ELEMENT_DELIMITER_REGEX))
                 .toList();
