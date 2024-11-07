@@ -41,4 +41,13 @@ class MarkDownFileReaderTest {
         );
     }
 
+    @DisplayName("헤더 정보와 요소들의 숫자가 일치하지 않는다면 예외가 발생한다.")
+    @Test
+    void test2() {
+        String path = "src/test/resources/InvalidHeader.md";
+        MarkDownFileReader reader = new MarkDownFileReader();
+
+        assertThrows(IllegalArgumentException.class, () -> reader.read(path));
+    }
+
 }
