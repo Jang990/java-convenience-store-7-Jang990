@@ -19,7 +19,7 @@ class PromotionTest {
     @MethodSource("promotionDurationOptions")
     void test1(LocalDate startDate, LocalDate endDate, boolean expected) {
         Promotion promotion = new Promotion(startDate, endDate);
-        assertEquals(promotion.isAvailable(), expected);
+        assertEquals(promotion.isAvailable(now), expected);
     }
 
     static Stream<Arguments> promotionDurationOptions() {

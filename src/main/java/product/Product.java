@@ -1,5 +1,6 @@
 package product;
 
+import basic.TimeHolder;
 import product.exception.PromotionException;
 
 public class Product {
@@ -19,10 +20,10 @@ public class Product {
         this.promotion = promotion;
     }
 
-    public void sale(int saleQuantity) throws PromotionException {
+    public void sale(TimeHolder timeHolder, int saleQuantity) throws PromotionException {
         if(normalStock < saleQuantity)
             throw new IllegalStateException("재고가 부족합니다.");
-        if(promotion.isAvailable() && promotionStock < saleQuantity)
+        if(promotion.isAvailable(timeHolder.now()) && promotionStock < saleQuantity)
             throw new PromotionException("프로모션을 적용할 수 있지만, 프로모션 재고가 부족합니다.");
 
         this.normalStock -= saleQuantity;
