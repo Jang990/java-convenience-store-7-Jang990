@@ -58,7 +58,11 @@ public class StoreFileReader {
     }
 
     private List<String> readHeaders(BufferedReader br) throws IOException {
-        return Arrays.stream(br.readLine().split(ELEMENT_DELIMITER_REGEX))
+        String headerLine = br.readLine();
+        if(headerLine == null || headerLine.isBlank())
+            throw new IllegalArgumentException("헤더가 존재하지 않습니다.");
+
+        return Arrays.stream(headerLine.split(ELEMENT_DELIMITER_REGEX))
                 .toList();
     }
 }
