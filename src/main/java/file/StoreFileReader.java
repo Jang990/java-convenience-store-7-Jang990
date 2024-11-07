@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class MarkDownFileReader {
+public class StoreFileReader {
     private static final String HEADER_ELEMENT_SIZE_MISMATCH_MESSAGE = "헤더의 수와 요소의 수가 맞지 않습니다.";
     private static final String IOEXCEPTION_ERROR_MESSAGE = "IOException 발생";
     private static final String FILE_NOT_FOUND_ERROR_MESSAGE = "파일을 찾을 수 없음";

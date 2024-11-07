@@ -12,12 +12,12 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MarkDownFileReaderTest {
-    @DisplayName(".md 파일을 읽어올 수 있다.")
+class StoreFileReaderTest {
+    @DisplayName("스토어 파일을 읽어올 수 있다.")
     @ParameterizedTest(name = "{0} 경로의 파일을 읽어온다.")
     @MethodSource("readingFileOptions")
     void test1(String path, List<Map<String,String>> expected) {
-        MarkDownFileReader reader = new MarkDownFileReader();
+        StoreFileReader reader = new StoreFileReader();
         List<Map<String, String>> result = reader.read(path);
 
         assertEquals(result.size(), expected.size());
@@ -45,7 +45,7 @@ class MarkDownFileReaderTest {
     @Test
     void test2() {
         String path = "src/test/resources/InvalidHeader.md";
-        MarkDownFileReader reader = new MarkDownFileReader();
+        StoreFileReader reader = new StoreFileReader();
 
         assertThrows(IllegalArgumentException.class, () -> reader.read(path));
     }
