@@ -41,14 +41,16 @@ public class MarkDownFileReader {
 
     private Map<String, String> toMap(String elementsLine, List<String> headers) {
         List<String> elements = Arrays.stream(elementsLine.split(ELEMENT_DELIMITER_REGEX)).toList();
-        if(elements.size() != headers.size())
-            throw new IllegalArgumentException(HEADER_ELEMENT_SIZE_MISMATCH_MESSAGE);
-
-        return combineListToMap(headers.iterator(), elements.iterator());
+        return combineData(headers, elements);
     }
 
-    private Map<String, String> combineListToMap(Iterator<String> keys, Iterator<String> values) {
+    private Map<String, String> combineData(List<String> headers, List<String> elements) {
+        if(headers.size() != elements.size())
+            throw new IllegalArgumentException(HEADER_ELEMENT_SIZE_MISMATCH_MESSAGE);
+
         Map<String, String> result = new HashMap<>();
+        Iterator<String> keys = headers.iterator();
+        Iterator<String> values = elements.iterator();
         while (keys.hasNext() && values.hasNext()) {
             result.put(keys.next(), values.next());
         }
