@@ -4,11 +4,15 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class PromotionDuration {
+    private static final String INVALID_RANGE_ERROR_MESSAGE = "시작 시간은 종료 시간보다 빨라야 합니다.";
+
     private final LocalDate startDate;
     private final LocalDate endDate;
-
-
+    
     public PromotionDuration(LocalDate startInclusive, LocalDate endInclusive) {
+        if(endInclusive.isBefore(startInclusive)) {
+            throw new IllegalArgumentException(INVALID_RANGE_ERROR_MESSAGE);
+        }
         this.startDate = startInclusive;
         this.endDate = endInclusive;
     }
