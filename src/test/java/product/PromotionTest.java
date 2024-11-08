@@ -37,16 +37,14 @@ class PromotionTest {
     @DisplayName("프로모션을 적용하면 할인된 가격을 확인할 수 있다.")
     @Test
     void test3() {
-        Promotion activePromotion = new Promotion(
+        Promotion promotion = new Promotion(
                 2, 1, "이벤트",
                 PromotionDurationStub.withInPeriod
         );
         Money productPrice = new Money(1000);
         int saleQuantity = 3;
 
-        Money discountedPrice = activePromotion.apply(productPrice, saleQuantity);
-
-        assertEquals(discountedPrice, new Money(2000));
+        assertEquals(promotion.apply(productPrice, saleQuantity), new Money(2000));
     }
 
 }
