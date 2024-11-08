@@ -19,7 +19,7 @@ class PromotionTest {
     @ParameterizedTest(name = "프로모션 기간 : {0} ~ {1}")
     @MethodSource("promotionDurationOptions")
     void test1(LocalDate startDate, LocalDate endDate, boolean expected) {
-        Promotion promotion = new Promotion(startDate, endDate);
+        Promotion promotion = new Promotion(startDate, endDate, "");
         assertEquals(promotion.isAvailable(now), expected);
     }
 
