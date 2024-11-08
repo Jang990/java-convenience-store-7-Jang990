@@ -51,8 +51,7 @@ public class PromotionTestBuilder {
                         new Quantity(requiredQuantity),
                         new Quantity(freeQuantity)
                 ),
-                name,
-                duration
+                duration, name
         );
     }
 

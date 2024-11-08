@@ -9,7 +9,10 @@ public class Promotion {
     private final PromotionDuration duration;
     private final String name;
 
-    public Promotion(PromotionCondition condition, String name, PromotionDuration duration) {
+    public Promotion(
+            PromotionCondition condition,
+            PromotionDuration duration,
+            String name) {
         this.condition = condition;
         this.duration = duration;
         this.name = name;
