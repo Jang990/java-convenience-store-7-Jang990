@@ -23,4 +23,11 @@ class MoneyTest {
         assertEquals(ONE.plus(TWO), THREE);
         assertEquals(THREE.plus(ONE), FOUR);
     }
+
+    @DisplayName("Money 곱하기 연산이 가능하다.")
+    @Test
+    void test3() {
+        assertEquals(ONE.times(3), THREE);
+        assertEquals(TWO.times(2), FOUR);
+    }
 }

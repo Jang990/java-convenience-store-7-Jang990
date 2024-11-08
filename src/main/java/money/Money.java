@@ -5,9 +5,9 @@ import java.util.Objects;
 public class Money {
     private static final int EMPTY_AMOUNT = 0;
     public static final Money EMPTY = new Money(EMPTY_AMOUNT);
+    private static final String MINUS_AMOUNT_ERROR_MESSAGE = "돈은 0보다 작을 수 없습니다.";
 
     private final int amount;
-    private final String MINUS_AMOUNT_ERROR_MESSAGE = "돈은 0보다 작을 수 없습니다.";
 
     public Money(int amount) {
         if(amount < EMPTY_AMOUNT)
@@ -18,6 +18,10 @@ public class Money {
 
     public Money plus(Money money) {
         return new Money(amount + money.amount);
+    }
+
+    public Money times(int multiplier) {
+        return new Money(amount * multiplier);
     }
 
     @Override
