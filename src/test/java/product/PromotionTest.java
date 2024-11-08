@@ -41,25 +41,28 @@ class PromotionTest {
     }
 
     @DisplayName("프로모션을 적용하면 가격을 할인 받을 수 있다.")
-    @ParameterizedTest(name = "{2}개 구매 : {0}개 가격으로 구매. {1}개 무료 제공")
+    @ParameterizedTest(name = "{2}개 구매 : {3}개 가격으로 구매. {1}개 무료 제공")
     @MethodSource("applyOptions")
-    void test3(int requiredQuantity, int freeQuantity, int quantityToBuy) {
+    void test3(int required, int free, int pay, int buy) {
         Promotion promotion = PromotionTestBuilder.builder()
-                .condition(requiredQuantity, freeQuantity)
+                .condition(required, free)
                 .duration(PromotionDurationStub.withInPeriod)
                 .build();
         Money productPrice = new Money(1000);
 
         assertEquals(
-                promotion.apply(productPrice, quantityToBuy),
-                productPrice.times(requiredQuantity)
+                promotion.apply(productPrice, buy),
+                productPrice.times(pay)
         );
     }
 
     static Stream<Arguments> applyOptions() {
         return Stream.of(
-                Arguments.of(2, 1, 2+1),
-                Arguments.of(1, 1, 1+1)
+                Arguments.of(2, 1, 2, 2+1),
+                Arguments.of(1, 1, 1, 1+1),
+
+                Arguments.of(2, 1, 4, 2+1+2+1),
+                Arguments.of(2, 1, 2, 2+1+1)
         );
     }
 
