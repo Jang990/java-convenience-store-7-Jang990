@@ -36,6 +36,6 @@ public class Promotion {
     }
 
     private Quantity getPromotionUnit() {
-        return new Quantity(requiredQuantity.amount + freeQuantity.amount);
+        return requiredQuantity.plus(freeQuantity);
     }
 }

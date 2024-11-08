@@ -13,6 +13,10 @@ public class Quantity {
         this.amount = amount;
     }
 
+    public Quantity plus(Quantity quantity) {
+        return new Quantity(amount + quantity.amount);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
