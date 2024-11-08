@@ -5,16 +5,12 @@ import money.Money;
 import java.time.LocalDate;
 
 public class Promotion {
-    private final Quantity requiredQuantity;
-    private final Quantity freeQuantity;
     private final PromotionCondition condition;
     private final PromotionDuration duration;
     private final String name;
 
     public Promotion(int requiredQuantity, int freeQuantity, String name, PromotionDuration duration) {
         condition = new PromotionCondition(new Quantity(requiredQuantity), new Quantity(freeQuantity));
-        this.requiredQuantity = new Quantity(requiredQuantity);
-        this.freeQuantity = new Quantity(freeQuantity);
         this.duration = duration;
         this.name = name;
     }
@@ -29,7 +25,7 @@ public class Promotion {
     }
 
     public Money apply(Money productPrice, Quantity requested) {
-        return productPrice.times(requiredQuantity.amount)
+        return productPrice.times(condition.required.amount)
                 .times(countAppliedPromotionBundle(requested));
     }
 
@@ -38,6 +34,6 @@ public class Promotion {
     }
 
     private Quantity getPromotionUnit() {
-        return requiredQuantity.plus(freeQuantity);
+        return condition.required.plus(condition.free);
     }
 }
