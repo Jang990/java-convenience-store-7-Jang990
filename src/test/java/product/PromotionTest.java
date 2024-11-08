@@ -19,7 +19,7 @@ class PromotionTest {
     static final Quantity TWO = new Quantity(2);
     static final PromotionCondition ONE_PLUS_ONE = new PromotionCondition(ONE, ONE);
     static final PromotionCondition TWO_PLUS_ONE = new PromotionCondition(TWO, ONE);
-    static final PromotionCondition ONE_PLUS_TWO = new PromotionCondition(ONE, TWO);
+    static final PromotionCondition TWO_PLUS_TWO = new PromotionCondition(TWO, TWO);
 
     private static Promotion promotion(PromotionDuration duration) {
         return PromotionTestBuilder.builder()
@@ -45,31 +45,39 @@ class PromotionTest {
         assertEquals(promotion.toString(), promotionName);
     }
 
-    @DisplayName("프로모션을 적용하면 가격을 할인 받을 수 있다.")
-    @ParameterizedTest(name = "{2}개를 {1}개 가격으로 구매")
-    @MethodSource("applyOptions")
-    void test3(PromotionCondition condition, int pay, int buy) {
+    @DisplayName("프로모션을 조건에 따라 할인 가격을 알 수 있다.")
+    @ParameterizedTest(name = "{1}개 구매했을 때 할인된 가격 : {3}")
+    @MethodSource("calculateDiscountOptions")
+    void test3(
+            PromotionCondition condition,
+            int requestedProductAmount,
+            int productPrice,
+            int expectedDiscountedPrice) {
         Promotion promotion = PromotionTestBuilder.builder()
                 .condition(condition)
-                .duration(PromotionDurationStub.withInPeriod)
                 .build();
-        Money productPrice = new Money(1000);
 
-        assertEquals(
-                promotion.apply(productPrice, new Quantity(buy)),
-                productPrice.times(pay)
+        Money result = promotion.calculateDiscount(
+                new Money(productPrice),
+                new Quantity(requestedProductAmount)
         );
+
+        assertEquals(result, new Money(expectedDiscountedPrice));
     }
 
-    static Stream<Arguments> applyOptions() {
+    static Stream<Arguments> calculateDiscountOptions() {
         return Stream.of(
-                Arguments.of(TWO_PLUS_ONE, 2, 2+1),
-                Arguments.of(ONE_PLUS_ONE, 1, 1+1),
+                Arguments.of(TWO_PLUS_ONE, 6, 100, 200),
+                Arguments.of(ONE_PLUS_ONE, 4, 100, 200),
+                Arguments.of(TWO_PLUS_TWO, 4, 100, 200),
 
-                Arguments.of(TWO_PLUS_ONE, 4, 2+1+2+1),
-                Arguments.of(TWO_PLUS_ONE, 2, 2+1+1),
+                Arguments.of(TWO_PLUS_ONE, 2, 100, 0),
+                Arguments.of(ONE_PLUS_ONE, 1, 100, 0),
+                Arguments.of(TWO_PLUS_TWO, 2, 100, 0),
 
-                Arguments.of(ONE_PLUS_TWO, 1, 1+2)
+                Arguments.of(TWO_PLUS_ONE, 5, 100, 100),
+                Arguments.of(ONE_PLUS_ONE, 7, 100, 300),
+                Arguments.of(TWO_PLUS_TWO, 3, 100, 0)
         );
     }
 

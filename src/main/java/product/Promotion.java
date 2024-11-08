@@ -27,12 +27,9 @@ public class Promotion {
         return name;
     }
 
-    public Money apply(Money productPrice, Quantity requested) {
-        return productPrice.times(condition.required.amount)
-                .times(countAppliedPromotionBundle(requested));
-    }
-
-    private int countAppliedPromotionBundle(Quantity saleQuantity) {
-        return saleQuantity.divide(condition.getPromotionUnit());
+    public Money calculateDiscount(Money productPrice, Quantity requested) {
+        return productPrice.times(
+                condition.free.amount * requested.divide(condition.getPromotionUnit())
+        );
     }
 }
