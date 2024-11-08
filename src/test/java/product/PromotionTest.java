@@ -51,7 +51,7 @@ class PromotionTest {
         Money productPrice = new Money(1000);
 
         assertEquals(
-                promotion.apply(productPrice, buy),
+                promotion.apply(productPrice, new Quantity(buy)),
                 productPrice.times(pay)
         );
     }

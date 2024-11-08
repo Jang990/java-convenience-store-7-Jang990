@@ -26,13 +26,13 @@ public class Promotion {
         return name;
     }
 
-    public Money apply(Money productPrice, int saleQuantity) {
+    public Money apply(Money productPrice, Quantity requested) {
         return productPrice.times(requiredQuantity.amount)
-                .times(countAppliedPromotionBundle(saleQuantity));
+                .times(countAppliedPromotionBundle(requested));
     }
 
-    private int countAppliedPromotionBundle(int saleQuantity) {
-        return saleQuantity / getPromotionUnit();
+    private int countAppliedPromotionBundle(Quantity saleQuantity) {
+        return saleQuantity.amount / getPromotionUnit();
     }
 
     private int getPromotionUnit() {
