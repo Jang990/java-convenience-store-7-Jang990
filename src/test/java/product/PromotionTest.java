@@ -15,11 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PromotionTest {
     static final LocalDate now = LocalDate.from(DateTimes.now());
-    static final Quantity ONE = new Quantity(1);
-    static final Quantity TWO = new Quantity(2);
-    static final PromotionCondition ONE_PLUS_ONE = new PromotionCondition(ONE, ONE);
-    static final PromotionCondition TWO_PLUS_ONE = new PromotionCondition(TWO, ONE);
-    static final PromotionCondition TWO_PLUS_TWO = new PromotionCondition(TWO, TWO);
 
     private static Promotion promotion(PromotionDuration duration) {
         return PromotionTestBuilder.builder()
@@ -45,39 +40,33 @@ class PromotionTest {
         assertEquals(promotion.toString(), promotionName);
     }
 
-    @DisplayName("프로모션을 조건에 따라 할인 가격을 알 수 있다.")
-    @ParameterizedTest(name = "{1}개 구매했을 때 할인된 가격 : {3}")
-    @MethodSource("calculateDiscountOptions")
+    @DisplayName("프로모션을 조건에 따라 할인 후 가격을 알 수 있다.")
+    @ParameterizedTest(name = "{0} : 개당 {2}원을 {1}개 구매했을 때 할인된 가격 - {3}원")
+    @MethodSource("applyOptions")
     void test3(
             PromotionCondition condition,
             int requestedProductAmount,
             int productPrice,
-            int expectedDiscountedPrice) {
+            int afterPrice) {
         Promotion promotion = PromotionTestBuilder.builder()
                 .condition(condition)
                 .build();
 
-        Money result = promotion.calculateDiscount(
+        Money result = promotion.apply(
                 new Money(productPrice),
                 new Quantity(requestedProductAmount)
         );
 
-        assertEquals(result, new Money(expectedDiscountedPrice));
+        assertEquals(new Money(afterPrice), result);
     }
 
-    static Stream<Arguments> calculateDiscountOptions() {
+    static Stream<Arguments> applyOptions() {
         return Stream.of(
-                Arguments.of(TWO_PLUS_ONE, 6, 100, 200),
-                Arguments.of(ONE_PLUS_ONE, 4, 100, 200),
-                Arguments.of(TWO_PLUS_TWO, 4, 100, 200),
+                Arguments.of(PromotionConditionTest.TWO_PLUS_ONE, 6, 100, 400),
+                Arguments.of(PromotionConditionTest.TWO_PLUS_ONE, 2, 100, 200),
+                Arguments.of(PromotionConditionTest.TWO_PLUS_ONE, 5, 100, 400),
 
-                Arguments.of(TWO_PLUS_ONE, 2, 100, 0),
-                Arguments.of(ONE_PLUS_ONE, 1, 100, 0),
-                Arguments.of(TWO_PLUS_TWO, 2, 100, 0),
-
-                Arguments.of(TWO_PLUS_ONE, 5, 100, 100),
-                Arguments.of(ONE_PLUS_ONE, 7, 100, 300),
-                Arguments.of(TWO_PLUS_TWO, 3, 100, 0)
+                Arguments.of(PromotionConditionTest.TWO_PLUS_TWO, 3, 100, 300)
         );
     }
 

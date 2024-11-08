@@ -27,9 +27,8 @@ public class Promotion {
         return name;
     }
 
-    protected Money calculateDiscount(Money productPrice, Quantity productRequested) {
-        return productPrice.times(
-                condition.calculateFreeQuantity(productRequested).amount
-        );
+    protected Money apply(Money productPrice, Quantity productRequested) {
+        Quantity free = condition.calculateFreeQuantity(productRequested);
+        return productPrice.times(productRequested.minus(free).amount);
     }
 }

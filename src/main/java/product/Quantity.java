@@ -17,6 +17,10 @@ public class Quantity {
         return new Quantity(amount + quantity.amount);
     }
 
+    public Quantity minus(Quantity quantity) {
+        return new Quantity(amount - quantity.amount);
+    }
+
     public int divide(Quantity unit) {
         return amount / unit.amount;
     }
