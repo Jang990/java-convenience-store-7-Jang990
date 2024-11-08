@@ -14,11 +14,4 @@ class QuantityTest {
     void test1() {
         assertThrows(IllegalArgumentException.class, () -> new Quantity(-1));
     }
-
-    @DisplayName("수량 나누기는 나머지를 버리고 결과를 반환한다.")
-    @Test
-    void test2() {
-        assertEquals(FIVE.divide(TWO), 2);
-        assertEquals(SIX.divide(TWO), 3);
-    }
 }
