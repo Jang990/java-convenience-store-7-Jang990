@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Quantity {
     private static final int EMPTY_AMOUNT = 0;
     private static final String MINUS_QUANTITY_ERROR_MESSAGE = "수량은 마이너스가 될 수 없습니다.";
-    private final int amount;
+    public final int amount;
 
     public Quantity(int amount) {
         if(amount < EMPTY_AMOUNT)

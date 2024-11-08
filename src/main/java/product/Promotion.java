@@ -5,21 +5,21 @@ import money.Money;
 import java.time.LocalDate;
 
 public class Promotion {
-    private final int requiredQuantity;
-    private final int freeQuantity;
+    private final Quantity requiredQuantity;
+    private final Quantity freeQuantity;
     private final PromotionDuration duration;
     private final String name;
 
     public Promotion(PromotionDuration duration, String name) {
-        requiredQuantity = 0;
-        freeQuantity = 0;
+        requiredQuantity = new Quantity(0);
+        freeQuantity = new Quantity(0);
         this.duration = duration;
         this.name = name;
     }
 
     public Promotion(int requiredQuantity, int freeQuantity, String name, PromotionDuration duration) {
-        this.requiredQuantity = requiredQuantity;
-        this.freeQuantity = freeQuantity;
+        this.requiredQuantity = new Quantity(requiredQuantity);
+        this.freeQuantity = new Quantity(freeQuantity);
         this.duration = duration;
         this.name = name;
     }
@@ -34,7 +34,7 @@ public class Promotion {
     }
 
     public Money apply(Money productPrice, int saleQuantity) {
-        return productPrice.times(requiredQuantity)
+        return productPrice.times(requiredQuantity.amount)
                 .times(countAppliedPromotionBundle(saleQuantity));
     }
 
@@ -43,6 +43,6 @@ public class Promotion {
     }
 
     private int getPromotionUnit() {
-        return requiredQuantity + freeQuantity;
+        return requiredQuantity.amount + freeQuantity.amount;
     }
 }
