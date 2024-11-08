@@ -19,7 +19,8 @@ class PromotionTest {
     @ParameterizedTest(name = "프로모션 기간 : {0} ~ {1}")
     @MethodSource("promotionDurationOptions")
     void test1(LocalDate startDate, LocalDate endDate, boolean expected) {
-        Promotion promotion = new Promotion(startDate, endDate, "");
+        PromotionDuration duration = new PromotionDuration(startDate, endDate);
+        Promotion promotion = new Promotion(duration, "");
         assertEquals(promotion.isAvailable(now), expected);
     }
 
@@ -35,7 +36,8 @@ class PromotionTest {
     @Test
     void test2() {
         String promotionName = "MD추천상품";
-        Promotion promotion = new Promotion(now, now, promotionName);
+        PromotionDuration duration = new PromotionDuration(now, now);
+        Promotion promotion = new Promotion(duration, promotionName);
         assertEquals(promotion.toString(), promotionName);
     }
 

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProductTest {
     private static final LocalDate now = LocalDate.now();
-    private static final Promotion activeNowPromotion = new Promotion(now, now, "");
+    private static final Promotion activeNowPromotion = new Promotion(new PromotionDuration(now, now), "");
 
     private static TimeHolderStub nowTimeStub() {
         TimeHolderStub result = new TimeHolderStub();

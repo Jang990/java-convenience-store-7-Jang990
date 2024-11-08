@@ -6,8 +6,8 @@ public class Promotion {
     private final PromotionDuration duration;
     private final String name;
 
-    public Promotion(LocalDate startDate, LocalDate endDate, String name) {
-        duration = new PromotionDuration(startDate, endDate);
+    public Promotion(PromotionDuration duration, String name) {
+        this.duration = duration;
         this.name = name;
     }
 
