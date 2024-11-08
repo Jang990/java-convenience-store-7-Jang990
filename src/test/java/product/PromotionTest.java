@@ -1,6 +1,7 @@
 package product;
 
 import camp.nextstep.edu.missionutils.DateTimes;
+import money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +32,21 @@ class PromotionTest {
                 promotionName
         );
         assertEquals(promotion.toString(), promotionName);
+    }
+
+    @DisplayName("프로모션을 적용하면 할인된 가격을 확인할 수 있다.")
+    @Test
+    void test3() {
+        Promotion activePromotion = new Promotion(
+                2, 1, "이벤트",
+                PromotionDurationStub.withInPeriod
+        );
+        Money productPrice = new Money(1000);
+        int saleQuantity = 3;
+
+        Money discountedPrice = activePromotion.apply(productPrice, saleQuantity);
+
+        assertEquals(discountedPrice, new Money(2000));
     }
 
 }
