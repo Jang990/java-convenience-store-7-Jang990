@@ -9,8 +9,8 @@ public class Promotion {
     private final PromotionDuration duration;
     private final String name;
 
-    public Promotion(int requiredQuantity, int freeQuantity, String name, PromotionDuration duration) {
-        condition = new PromotionCondition(new Quantity(requiredQuantity), new Quantity(freeQuantity));
+    public Promotion(PromotionCondition condition, String name, PromotionDuration duration) {
+        this.condition = condition;
         this.duration = duration;
         this.name = name;
     }

@@ -47,8 +47,10 @@ public class PromotionTestBuilder {
 
     public Promotion build() {
         return new Promotion(
-                requiredQuantity,
-                freeQuantity,
+                new PromotionCondition(
+                        new Quantity(requiredQuantity),
+                        new Quantity(freeQuantity)
+                ),
                 name,
                 duration
         );
