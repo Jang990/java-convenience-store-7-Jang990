@@ -10,13 +10,6 @@ public class Promotion {
     private final PromotionDuration duration;
     private final String name;
 
-    public Promotion(PromotionDuration duration, String name) {
-        requiredQuantity = new Quantity(0);
-        freeQuantity = new Quantity(0);
-        this.duration = duration;
-        this.name = name;
-    }
-
     public Promotion(int requiredQuantity, int freeQuantity, String name, PromotionDuration duration) {
         this.requiredQuantity = new Quantity(requiredQuantity);
         this.freeQuantity = new Quantity(freeQuantity);
