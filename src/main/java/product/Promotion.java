@@ -7,10 +7,12 @@ import java.time.LocalDate;
 public class Promotion {
     private final Quantity requiredQuantity;
     private final Quantity freeQuantity;
+    private final PromotionCondition condition;
     private final PromotionDuration duration;
     private final String name;
 
     public Promotion(int requiredQuantity, int freeQuantity, String name, PromotionDuration duration) {
+        condition = new PromotionCondition(new Quantity(requiredQuantity), new Quantity(freeQuantity));
         this.requiredQuantity = new Quantity(requiredQuantity);
         this.freeQuantity = new Quantity(freeQuantity);
         this.duration = duration;
