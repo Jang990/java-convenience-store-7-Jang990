@@ -2,6 +2,7 @@ package product;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -28,6 +29,16 @@ class PromotionTest {
                 Arguments.of(now.minusDays(0), now.plusDays(0), true),
                 Arguments.of(now.minusDays(1), now.minusDays(1), false)
         );
+    }
+
+    @DisplayName("프로모션 이름을 확인할 수 있다.")
+    @Test
+    void test2() {
+        String promotionName = "MD추천상품";
+
+        Promotion promotion = new Promotion(now, now, promotionName);
+
+        assertEquals(promotion.toString(), promotionName);
     }
 
 }
