@@ -34,8 +34,15 @@ public class Promotion {
     }
 
     public Money apply(Money productPrice, int saleQuantity) {
-        int promotionUnit = requiredQuantity + freeQuantity;
-        int appliedPromotionBundle = saleQuantity / promotionUnit;
-        return productPrice.times(requiredQuantity).times(appliedPromotionBundle);
+        return productPrice.times(requiredQuantity)
+                .times(countAppliedPromotionBundle(saleQuantity));
+    }
+
+    private int countAppliedPromotionBundle(int saleQuantity) {
+        return saleQuantity / getPromotionUnit();
+    }
+
+    private int getPromotionUnit() {
+        return requiredQuantity + freeQuantity;
     }
 }
