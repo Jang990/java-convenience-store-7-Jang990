@@ -6,6 +6,7 @@ public class Money {
     private static final int EMPTY_AMOUNT = 0;
     public static final Money EMPTY = new Money(EMPTY_AMOUNT);
     private static final String MINUS_AMOUNT_ERROR_MESSAGE = "돈은 0보다 작을 수 없습니다.";
+    private static final String MONEY_FORMAT = "%,3d";
 
     private final int amount;
 
@@ -35,5 +36,10 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(amount);
+    }
+
+    @Override
+    public String toString() {
+        return MONEY_FORMAT.formatted(amount);
     }
 }
