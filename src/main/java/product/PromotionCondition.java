@@ -8,4 +8,8 @@ public class PromotionCondition {
         this.required = required;
         this.free = free;
     }
+
+    protected Quantity getPromotionUnit() {
+        return required.plus(free);
+    }
 }

@@ -30,10 +30,6 @@ public class Promotion {
     }
 
     private int countAppliedPromotionBundle(Quantity saleQuantity) {
-        return saleQuantity.divide(getPromotionUnit());
-    }
-
-    private Quantity getPromotionUnit() {
-        return condition.required.plus(condition.free);
+        return saleQuantity.divide(condition.getPromotionUnit());
     }
 }
