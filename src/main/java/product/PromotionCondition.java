@@ -1,6 +1,7 @@
 package product;
 
 public class PromotionCondition {
+    private static final String PROMOTION_CONDITION_FORMAT = "%s+%s";
     public final Quantity required;
     public final Quantity free;
 
@@ -15,5 +16,10 @@ public class PromotionCondition {
 
     private Quantity getPromotionUnit() {
         return required.plus(free);
+    }
+
+    @Override
+    public String toString() {
+        return PROMOTION_CONDITION_FORMAT.formatted(required, free);
     }
 }
