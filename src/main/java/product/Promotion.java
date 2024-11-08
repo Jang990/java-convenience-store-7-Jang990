@@ -32,7 +32,7 @@ public class Promotion {
     }
 
     private int countAppliedPromotionBundle(Quantity saleQuantity) {
-        return saleQuantity.amount / getPromotionUnit().amount;
+        return saleQuantity.divide(getPromotionUnit());
     }
 
     private Quantity getPromotionUnit() {
