@@ -27,9 +27,9 @@ public class Promotion {
         return name;
     }
 
-    public Money calculateDiscount(Money productPrice, Quantity requested) {
+    public Money calculateDiscount(Money productPrice, Quantity productRequestedAmount) {
         return productPrice.times(
-                condition.free.amount * requested.divide(condition.getPromotionUnit())
+                condition.calculateFreeAmount(productRequestedAmount)
         );
     }
 }
