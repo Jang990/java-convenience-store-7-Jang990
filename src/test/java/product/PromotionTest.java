@@ -35,9 +35,7 @@ class PromotionTest {
     @Test
     void test2() {
         String promotionName = "MD추천상품";
-
         Promotion promotion = new Promotion(now, now, promotionName);
-
         assertEquals(promotion.toString(), promotionName);
     }
 
