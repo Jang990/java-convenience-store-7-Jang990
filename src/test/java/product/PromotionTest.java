@@ -40,8 +40,8 @@ class PromotionTest {
         assertEquals(promotion.toString(), promotionName);
     }
 
-    @DisplayName("프로모션을 적용하면 할인된 가격을 확인할 수 있다.")
-    @ParameterizedTest(name = "{2}개를 구매할 때 프로모션 적용 시 {0}개 구매 가격으로 구매하고 {1}개는 무료 제공")
+    @DisplayName("프로모션을 적용하면 가격을 할인 받을 수 있다.")
+    @ParameterizedTest(name = "{2}개 구매 : {0}개 가격으로 구매. {1}개 무료 제공")
     @MethodSource("applyOptions")
     void test3(int requiredQuantity, int freeQuantity, int quantityToBuy) {
         Promotion promotion = PromotionTestBuilder.builder()

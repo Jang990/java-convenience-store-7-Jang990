@@ -34,6 +34,8 @@ public class Promotion {
     }
 
     public Money apply(Money productPrice, int saleQuantity) {
-        return new Money(2000);
+        int promotionUnit = requiredQuantity + freeQuantity;
+        int appliedPromotionBundle = saleQuantity / promotionUnit;
+        return productPrice.times(requiredQuantity).times(appliedPromotionBundle);
     }
 }
