@@ -21,6 +21,14 @@ public class Quantity {
         return amount / unit.amount;
     }
 
+    public Quantity times(Quantity quantity) {
+        return new Quantity(amount * quantity.amount);
+    }
+
+    public Bundle bundleUp(Quantity unit) {
+        return new Bundle(this, unit);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

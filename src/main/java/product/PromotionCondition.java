@@ -9,12 +9,8 @@ public class PromotionCondition {
         this.free = free;
     }
 
-    protected int calculateFreeAmount(Quantity requested) {
-        return free.amount * countPromotionBundles(requested);
-    }
-
-    private int countPromotionBundles(Quantity requested) {
-        return requested.divide(getPromotionUnit());
+    protected Quantity calculateFreeQuantity(Quantity requested) {
+        return free.times(requested.bundleUp(getPromotionUnit()));
     }
 
     private Quantity getPromotionUnit() {
