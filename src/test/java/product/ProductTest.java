@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProductTest {
     private static final LocalDate now = LocalDate.now();
-    private static final Promotion activeNowPromotion = new Promotion(new PromotionDuration(now, now), "");
+    private static final Promotion activePromotion = new Promotion(PromotionDurationStub.withInPeriod, "");
 
     private static TimeHolderStub nowTimeStub() {
         TimeHolderStub result = new TimeHolderStub();
@@ -29,7 +29,7 @@ class ProductTest {
     @DisplayName("프로모션을 적용할 수 있지만, 프로모션 재고가 없다면 예외가 발생한다.")
     @Test
     void test2() {
-        Product product = new Product(10, 0, activeNowPromotion);
+        Product product = new Product(10, 0, activePromotion);
         assertThrows(PromotionException.class, () -> product.sale(nowTimeStub(), 1));
     }
 
