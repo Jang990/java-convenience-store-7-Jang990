@@ -41,7 +41,7 @@ class PromotionTest {
     }
 
     @DisplayName("프로모션을 적용하면 가격을 할인 받을 수 있다.")
-    @ParameterizedTest(name = "{2}개 구매 : {3}개 가격으로 구매. {1}개 무료 제공")
+    @ParameterizedTest(name = "{3}개 구매 : {1}개 무료, {2}개 가격으로 구매")
     @MethodSource("applyOptions")
     void test3(int required, int free, int pay, int buy) {
         Promotion promotion = PromotionTestBuilder.builder()
@@ -62,7 +62,9 @@ class PromotionTest {
                 Arguments.of(1, 1, 1, 1+1),
 
                 Arguments.of(2, 1, 4, 2+1+2+1),
-                Arguments.of(2, 1, 2, 2+1+1)
+                Arguments.of(2, 1, 2, 2+1+1),
+
+                Arguments.of(1, 2, 1, 1+2)
         );
     }
 
