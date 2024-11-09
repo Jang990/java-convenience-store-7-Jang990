@@ -46,6 +46,16 @@ class NEWProductTest {
         assertThrows(IllegalArgumentException.class, () -> product.buy(0));
     }
 
+    @DisplayName("상품의 가격, 재고, 이름을 설정할 수 있다.")
+    @Test
+    void test4() {
+        NEWProduct product = new NEWProduct("콜라", 1000, 1, 0);
+        assertEquals("콜라", product.getName());
+        assertEquals(1000,product.getPrice());
+        assertEquals(1,product.getPromotionStock());
+        assertEquals(0,product.getNormalStock());
+    }
+
     static class ProductQuantity {
         public int promotion;
         public int normal;
