@@ -7,14 +7,12 @@ public class NEWProduct {
 
     private final String name;
     private final int price;
-    private int promotionStock;
-    private int normalStock;
+    private final ProductQuantity stock;
 
-    public NEWProduct(String name, int price, int promotionStock, int normalStock) {
+    public NEWProduct(String name, int price, ProductQuantity stock) {
         this.name = name;
         this.price = price;
-        this.promotionStock = promotionStock;
-        this.normalStock = normalStock;
+        this.stock = stock;
     }
 
     public void buy(int quantity) {
@@ -23,26 +21,26 @@ public class NEWProduct {
         if(stock() < quantity)
             throw new IllegalStateException(EMPTY_STOCK_ERROR_MESSAGE);
 
-        if (promotionStock >= quantity) {
-            promotionStock -= quantity;
+        if (stock.promotion >= quantity) {
+            stock.promotion -= quantity;
             return;
         }
-        quantity -= promotionStock;
-        promotionStock = 0;
+        quantity -= stock.promotion;
+        stock.promotion = 0;
 
-        normalStock -= quantity;
+        stock.normal -= quantity;
     }
 
     public int getPromotionStock() {
-        return promotionStock;
+        return stock.promotion;
     }
 
     public int getNormalStock() {
-        return normalStock;
+        return stock.normal;
     }
 
     private int stock() {
-        return promotionStock + normalStock;
+        return stock.promotion + stock.normal;
     }
 
     public String getName() {
