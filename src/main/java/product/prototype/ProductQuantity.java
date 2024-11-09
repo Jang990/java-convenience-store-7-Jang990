@@ -6,8 +6,9 @@ public class ProductQuantity {
     private static final String PRODUCT_QUANTITY_FORMAT = "상품재고{프로모션=%d, 일반=%d}";
     private static final String TARGET_STOCK_EXCEEDS_ERROR_MESSAGE = "비교 대상의 재고가 더 많습니다.";
     private static final String EMPTY_STOCK_ERROR_MESSAGE = "재고가 부족합니다.";
-    public int promotion;
-    public int normal;
+
+    private final int promotion;
+    private final int normal;
 
     public ProductQuantity(int promotion, int normal) {
         this.promotion = promotion;
