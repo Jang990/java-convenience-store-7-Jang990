@@ -1,4 +1,4 @@
-package product;
+package product.prototype;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package product;
+package product.prototype;
 
 public class NEWProduct {
     private int stock;
