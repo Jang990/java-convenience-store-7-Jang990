@@ -39,14 +39,6 @@ public class NEWProduct {
         return productQuantity;
     }
 
-    public int getPromotionStock() {
-        return productQuantity.promotion;
-    }
-
-    public int getNormalStock() {
-        return productQuantity.normal;
-    }
-
     public String getName() {
         return name;
     }
