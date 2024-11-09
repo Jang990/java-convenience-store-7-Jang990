@@ -11,14 +11,6 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NEWProductTest {
-    @DisplayName("상품 구매 시 재고가 부족하다면 예외가 발생한다.")
-    @Test
-    void test1() {
-        ProductQuantity stock = new ProductQuantity(10, 0);
-        NEWProduct product = new NEWProduct("ABC", 1000,stock);
-        assertThrows(IllegalStateException.class, () -> product.purchase(11));
-    }
-
     @DisplayName("프로모션 재고가 부족할 때 일반 재고를 사용한다.")
     @ParameterizedTest(name = "{0}을 {1}개 구매 : 상품 재고 - {2}.{3}")
     @MethodSource("buyOptions")

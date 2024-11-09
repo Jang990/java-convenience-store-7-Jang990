@@ -43,7 +43,6 @@ class ProductQuantityTest {
         assertThrows(IllegalArgumentException.class, () -> smaller.calculateDifference(bigger));
     }
 
-
     @DisplayName("재고의 차이를 비교할 수 있다.")
     @Test
     void test4() {
@@ -58,6 +57,12 @@ class ProductQuantityTest {
                         .calculateDifference(quantity(3,6)),
                 quantity(2,4)
         );
+    }
+
+    @DisplayName("재고를 감소하려고 시도할 떄 재고가 0보다 작으면 예외가 발생한다.")
+    @Test
+    void test5() {
+        assertThrows(IllegalStateException.class, () -> quantity(1, 1).decrease(10));
     }
 
     private static ProductQuantity quantity(int promotion, int normal) {
