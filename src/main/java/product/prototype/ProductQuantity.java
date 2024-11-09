@@ -23,7 +23,10 @@ public class ProductQuantity {
                 || quantity.normal > normal)
             throw new IllegalArgumentException(TARGET_STOCK_EXCEEDS_ERROR_MESSAGE);
 
-        return null;
+        return new ProductQuantity(
+                promotion - quantity.promotion,
+                normal - quantity.normal
+        );
     }
 
     protected ProductQuantity decrease(int quantity) {
