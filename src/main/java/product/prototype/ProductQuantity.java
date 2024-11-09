@@ -7,15 +7,15 @@ public class ProductQuantity {
     private static final String TARGET_STOCK_EXCEEDS_ERROR_MESSAGE = "비교 대상의 재고가 더 많습니다.";
     private static final String EMPTY_STOCK_ERROR_MESSAGE = "재고가 부족합니다.";
 
-    private final NEWQuantity promotion;
-    private final NEWQuantity normal;
+    private final Quantity promotion;
+    private final Quantity normal;
     
-    public ProductQuantity(NEWQuantity promotion, NEWQuantity normal) {
+    public ProductQuantity(Quantity promotion, Quantity normal) {
         this.promotion = promotion;
         this.normal = normal;
     }
 
-    public NEWQuantity stock() {
+    public Quantity stock() {
         return promotion.plus(normal);
     }
 
@@ -31,13 +31,13 @@ public class ProductQuantity {
     }
 
     protected ProductQuantity decrease(int quantityNum) {
-        NEWQuantity quantity = new NEWQuantity(quantityNum);
+        Quantity quantity = new Quantity(quantityNum);
         if(stock().isLessThan(quantity))
             throw new IllegalStateException(EMPTY_STOCK_ERROR_MESSAGE);
 
         if (promotion.equals(quantity) || promotion.isGreaterThan(quantity))
             return new ProductQuantity(promotion.minus(quantity), normal);
-        return new ProductQuantity(new NEWQuantity(0), normal.plus(promotion).minus(quantity));
+        return new ProductQuantity(new Quantity(0), normal.plus(promotion).minus(quantity));
     }
 
     @Override

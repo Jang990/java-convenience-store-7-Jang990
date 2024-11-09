@@ -69,8 +69,8 @@ class ProductQuantityTest {
         return new ProductQuantity(toQuantity(promotion), toQuantity(normal));
     }
 
-    private static NEWQuantity toQuantity(int normal) {
-        return new NEWQuantity(normal);
+    private static Quantity toQuantity(int normal) {
+        return new Quantity(normal);
     }
 
 }
