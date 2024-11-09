@@ -1,6 +1,10 @@
 package product.prototype;
 
 public class NEWProduct {
+    private static final String REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE = "0개를 구매할 수 없습니다.";
+    private static final String EMPTY_STOCK_ERROR_MESSAGE = "재고가 부족합니다.";
+    private static final int EMPTY_QUANTITY = 0;
+
     private int promotionStock;
     private int normalStock;
 
@@ -10,8 +14,10 @@ public class NEWProduct {
     }
 
     public void buy(int quantity) {
+        if(quantity == EMPTY_QUANTITY)
+            throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
         if(stock() < quantity)
-            throw new IllegalStateException("재고가 부족합니다.");
+            throw new IllegalStateException(EMPTY_STOCK_ERROR_MESSAGE);
 
         if (promotionStock >= quantity) {
             promotionStock -= quantity;
