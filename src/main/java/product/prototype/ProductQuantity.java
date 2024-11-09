@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class ProductQuantity {
     private static final String PRODUCT_QUANTITY_FORMAT = "상품재고{프로모션=%d, 일반=%d}";
+    private static final String TARGET_STOCK_EXCEEDS_ERROR_MESSAGE = "비교 대상의 재고가 더 많습니다.";
     public int promotion;
     public int normal;
 
@@ -14,6 +15,15 @@ public class ProductQuantity {
 
     public int stock() {
         return promotion + normal;
+    }
+
+    protected ProductQuantity calculateDifference(ProductQuantity quantity) {
+        if(quantity.stock() > this.stock()
+                || quantity.promotion > promotion
+                || quantity.normal > normal)
+            throw new IllegalArgumentException(TARGET_STOCK_EXCEEDS_ERROR_MESSAGE);
+
+        return null;
     }
 
     protected ProductQuantity decrease(int quantity) {

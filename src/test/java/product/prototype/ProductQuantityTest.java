@@ -35,4 +35,12 @@ class ProductQuantityTest {
         assertEquals(new ProductQuantity(0, 0), quantity.decrease(4));
     }
 
+    @DisplayName("많은 재고에서 적은 재고의 차이를 확인하려 하면 예외가 발생한다.")
+    @Test
+    void test3() {
+        ProductQuantity smaller = new ProductQuantity(1, 1);
+        ProductQuantity bigger = new ProductQuantity(10, 10);
+        assertThrows(IllegalArgumentException.class, () -> smaller.calculateDifference(bigger));
+    }
+
 }
