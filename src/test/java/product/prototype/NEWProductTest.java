@@ -23,4 +23,14 @@ class NEWProductTest {
         assertEquals(1, product.getNormalStock());
     }
 
+    @DisplayName("프로모션 재고가 부족할 때 일반 재고를 사용한다.2")
+    @Test
+    void test3() {
+        NEWProduct product = new NEWProduct(5,5);
+        product.buy(6);
+
+        assertEquals(0, product.getPromotionStock());
+        assertEquals(4, product.getNormalStock());
+    }
+
 }
