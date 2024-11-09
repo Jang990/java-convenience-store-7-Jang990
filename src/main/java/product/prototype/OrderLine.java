@@ -19,11 +19,7 @@ public class OrderLine {
         return productPrice;
     }
 
-    public int getPromotionQuantity() {
-        return productQuantity.promotion;
-    }
-
-    public int getNormalQuantity() {
-        return productQuantity.normal;
+    public ProductQuantity getBuyQuantity() {
+        return productQuantity;
     }
 }

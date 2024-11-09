@@ -35,6 +35,10 @@ public class NEWProduct {
         return new OrderLine(name, price, new ProductQuantity(promotionCnt, normalCnt));
     }
 
+    public ProductQuantity getStock() {
+        return productQuantity;
+    }
+
     public int getPromotionStock() {
         return productQuantity.promotion;
     }

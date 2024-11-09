@@ -22,22 +22,19 @@ class NEWProductTest {
     @DisplayName("프로모션 재고가 부족할 때 일반 재고를 사용한다.")
     @ParameterizedTest(name = "{0}을 {1}개 구매 : 상품 재고 - {2}.{3}")
     @MethodSource("buyOptions")
-    void test2(ProductQuantity stock, int buyQuantity, int expectedPromotion, int expectedNormal) {
+    void test2(ProductQuantity stock, int buyQuantity, ProductQuantity stockAfterBuy) {
         NEWProduct product = new NEWProduct("ABC", 1000, stock);
         product.buy(buyQuantity);
 
-        System.out.println(stock);
-
-        assertEquals(expectedPromotion, product.getPromotionStock());
-        assertEquals(expectedNormal, product.getNormalStock());
+        assertEquals(stockAfterBuy, product.getStock());
     }
 
     static Stream<Arguments> buyOptions() {
         return Stream.of(
-                Arguments.of(new ProductQuantity(2, 2), 1, 1, 2),
-                Arguments.of(new ProductQuantity(2, 2), 2, 0, 2),
-                Arguments.of(new ProductQuantity(2, 2), 3, 0, 1),
-                Arguments.of(new ProductQuantity(2, 2), 4, 0, 0)
+                Arguments.of(new ProductQuantity(2, 2), 1, new ProductQuantity(1, 2)),
+                Arguments.of(new ProductQuantity(2, 2), 2, new ProductQuantity(0, 2)),
+                Arguments.of(new ProductQuantity(2, 2), 3, new ProductQuantity(0, 1)),
+                Arguments.of(new ProductQuantity(2, 2), 4, new ProductQuantity(0, 0))
         );
     }
 
@@ -56,9 +53,8 @@ class NEWProductTest {
         NEWProduct product = new NEWProduct("콜라", 1000, productStock);
 
         assertEquals("콜라", product.getName());
-        assertEquals(1000,product.getPrice());
-        assertEquals(1,product.getPromotionStock());
-        assertEquals(0,product.getNormalStock());
+        assertEquals(1000, product.getPrice());
+        assertEquals(productStock, product.getStock());
     }
 
     @DisplayName("구매 후 구매정보를 확인할 수 있어야 한다.")
@@ -73,8 +69,7 @@ class NEWProductTest {
 
         assertEquals(productName, result.getProductName());
         assertEquals(productPrice, result.getProductPrice());
-        assertEquals(10, result.getPromotionQuantity());
-        assertEquals(0, result.getNormalQuantity());
+        assertEquals(new ProductQuantity(10, 0), result.getBuyQuantity());
     }
 
 }
