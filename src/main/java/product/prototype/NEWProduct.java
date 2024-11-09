@@ -7,7 +7,7 @@ public class NEWProduct {
 
     private final String name;
     private final int price;
-    private final ProductQuantity productQuantity;
+    private ProductQuantity productQuantity;
 
     public NEWProduct(String name, int price, ProductQuantity productQuantity) {
         this.name = name;
@@ -21,18 +21,18 @@ public class NEWProduct {
         if(productQuantity.stock() < quantity)
             throw new IllegalStateException(EMPTY_STOCK_ERROR_MESSAGE);
 
-        if (productQuantity.promotion >= quantity) {
-            productQuantity.promotion -= quantity;
-            return new OrderLine(name, price, new ProductQuantity(quantity, 0));
-        }
+        ProductQuantity purchaseQuantity = calculatePurchaseQuantity(quantity);
+        decreaseProductQuantity(quantity);
+        return new OrderLine(name, price, purchaseQuantity);
+    }
 
-        int promotionCnt = productQuantity.promotion;
-        quantity -= productQuantity.promotion;
-        int normalCnt = quantity;
-        productQuantity.promotion = 0;
+    private void decreaseProductQuantity(int quantity) {
+        productQuantity = productQuantity.decrease(quantity);
+    }
 
-        productQuantity.normal -= quantity;
-        return new OrderLine(name, price, new ProductQuantity(promotionCnt, normalCnt));
+    private ProductQuantity calculatePurchaseQuantity(int quantity) {
+        ProductQuantity quantityAfterPurchase = productQuantity.decrease(quantity);
+        return productQuantity.calculateDifference(quantityAfterPurchase);
     }
 
     public ProductQuantity getStock() {
