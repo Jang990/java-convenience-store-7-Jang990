@@ -15,7 +15,7 @@ public class NEWProduct {
         this.productQuantity = productQuantity;
     }
 
-    public OrderLine buy(int quantity) {
+    public OrderLine purchase(int quantity) {
         if(quantity == EMPTY_QUANTITY)
             throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
         if(productQuantity.stock() < quantity)

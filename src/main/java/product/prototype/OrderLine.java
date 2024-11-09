@@ -3,12 +3,12 @@ package product.prototype;
 public class OrderLine {
     private final String productName;
     private final int productPrice;
-    private final ProductQuantity productQuantity;
+    private final ProductQuantity purchaseQuantity;
 
-    public OrderLine(String productName, int productPrice, ProductQuantity productQuantity) {
+    public OrderLine(String productName, int productPrice, ProductQuantity purchaseQuantity) {
         this.productName = productName;
         this.productPrice = productPrice;
-        this.productQuantity = productQuantity;
+        this.purchaseQuantity = purchaseQuantity;
     }
 
     public String getProductName() {
@@ -19,7 +19,7 @@ public class OrderLine {
         return productPrice;
     }
 
-    public ProductQuantity getBuyQuantity() {
-        return productQuantity;
+    public ProductQuantity getPurchaseQuantity() {
+        return purchaseQuantity;
     }
 }

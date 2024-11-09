@@ -16,7 +16,7 @@ class NEWProductTest {
     void test1() {
         ProductQuantity stock = new ProductQuantity(10, 0);
         NEWProduct product = new NEWProduct("ABC", 1000,stock);
-        assertThrows(IllegalStateException.class, () -> product.buy(11));
+        assertThrows(IllegalStateException.class, () -> product.purchase(11));
     }
 
     @DisplayName("프로모션 재고가 부족할 때 일반 재고를 사용한다.")
@@ -24,7 +24,7 @@ class NEWProductTest {
     @MethodSource("buyOptions")
     void test2(ProductQuantity stock, int buyQuantity, ProductQuantity stockAfterBuy) {
         NEWProduct product = new NEWProduct("ABC", 1000, stock);
-        product.buy(buyQuantity);
+        product.purchase(buyQuantity);
 
         assertEquals(stockAfterBuy, product.getStock());
     }
@@ -43,7 +43,7 @@ class NEWProductTest {
     void test3() {
         ProductQuantity productStock = new ProductQuantity(1, 0);
         NEWProduct product = new NEWProduct("ABC", 1000, productStock);
-        assertThrows(IllegalArgumentException.class, () -> product.buy(0));
+        assertThrows(IllegalArgumentException.class, () -> product.purchase(0));
     }
 
     @DisplayName("상품의 가격, 재고, 이름을 설정할 수 있다.")
@@ -65,11 +65,11 @@ class NEWProductTest {
         int productPrice = 1000;
         NEWProduct product = new NEWProduct(productName, productPrice, productStock);
 
-        OrderLine result = product.buy(10);
+        OrderLine result = product.purchase(10);
 
         assertEquals(productName, result.getProductName());
         assertEquals(productPrice, result.getProductPrice());
-        assertEquals(new ProductQuantity(10, 0), result.getBuyQuantity());
+        assertEquals(new ProductQuantity(10, 0), result.getPurchaseQuantity());
     }
 
 }
