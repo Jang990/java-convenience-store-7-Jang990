@@ -21,10 +21,6 @@ public class NEWQuantity {
         return new NEWQuantity(amount - quantity.amount);
     }
 
-    public NEWQuantity times(NEWQuantity quantity) {
-        return new NEWQuantity(amount * quantity.amount);
-    }
-
     public boolean isLessThan(NEWQuantity quantity) {
         return amount < quantity.amount;
     }
