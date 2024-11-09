@@ -7,37 +7,37 @@ public class ProductQuantity {
     private static final String TARGET_STOCK_EXCEEDS_ERROR_MESSAGE = "비교 대상의 재고가 더 많습니다.";
     private static final String EMPTY_STOCK_ERROR_MESSAGE = "재고가 부족합니다.";
 
-    private final int promotion;
-    private final int normal;
-
-    public ProductQuantity(int promotion, int normal) {
+    private final NEWQuantity promotion;
+    private final NEWQuantity normal;
+    
+    public ProductQuantity(NEWQuantity promotion, NEWQuantity normal) {
         this.promotion = promotion;
         this.normal = normal;
     }
 
-    public int stock() {
-        return promotion + normal;
+    public NEWQuantity stock() {
+        return promotion.plus(normal);
     }
 
     protected ProductQuantity calculateDifference(ProductQuantity quantity) {
-        if(quantity.stock() > this.stock()
-                || quantity.promotion > promotion
-                || quantity.normal > normal)
+        if(promotion.isLessThan(quantity.promotion)
+                || normal.isLessThan(quantity.normal))
             throw new IllegalArgumentException(TARGET_STOCK_EXCEEDS_ERROR_MESSAGE);
 
         return new ProductQuantity(
-                promotion - quantity.promotion,
-                normal - quantity.normal
+                promotion.minus(quantity.promotion),
+                normal.minus(quantity.normal)
         );
     }
 
-    protected ProductQuantity decrease(int quantity) {
-        if(quantity > stock())
+    protected ProductQuantity decrease(int quantityNum) {
+        NEWQuantity quantity = new NEWQuantity(quantityNum);
+        if(stock().isLessThan(quantity))
             throw new IllegalStateException(EMPTY_STOCK_ERROR_MESSAGE);
 
-        if (promotion >= quantity)
-            return new ProductQuantity(promotion - quantity, normal);
-        return new ProductQuantity(0, normal - quantity + promotion);
+        if (promotion.equals(quantity) || promotion.isGreaterThan(quantity))
+            return new ProductQuantity(promotion.minus(quantity), normal);
+        return new ProductQuantity(new NEWQuantity(0), normal.plus(promotion).minus(quantity));
     }
 
     @Override
@@ -45,16 +45,16 @@ public class ProductQuantity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductQuantity that = (ProductQuantity) o;
-        return promotion == that.promotion && normal == that.normal;
+        return promotion.amount == that.promotion.amount && normal.amount == that.normal.amount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(promotion, normal);
+        return Objects.hash(promotion.amount, normal.amount);
     }
 
     @Override
     public String toString() {
-        return PRODUCT_QUANTITY_FORMAT.formatted(promotion, normal);
+        return PRODUCT_QUANTITY_FORMAT.formatted(promotion.amount, normal.amount);
     }
 }
