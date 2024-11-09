@@ -1,6 +1,6 @@
 package product.prototype;
 
-public class NEWProduct {
+public class Product {
     private static final String REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE = "0개를 구매할 수 없습니다.";
     private static final int EMPTY_QUANTITY = 0;
 
@@ -8,7 +8,7 @@ public class NEWProduct {
     private final int price;
     private ProductQuantity productQuantity;
 
-    public NEWProduct(String name, int price, ProductQuantity productQuantity) {
+    public Product(String name, int price, ProductQuantity productQuantity) {
         this.name = name;
         this.price = price;
         this.productQuantity = productQuantity;

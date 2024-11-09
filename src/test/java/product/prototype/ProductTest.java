@@ -10,12 +10,12 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NEWProductTest {
+class ProductTest {
     @DisplayName("프로모션 재고가 부족할 때 일반 재고를 사용한다.")
     @ParameterizedTest(name = "{0}을 {1}개 구매 : 상품 재고 - {2}.{3}")
     @MethodSource("buyOptions")
     void test2(ProductQuantity stock, int buyQuantity, ProductQuantity stockAfterBuy) {
-        NEWProduct product = new NEWProduct("ABC", 1000, stock);
+        Product product = new Product("ABC", 1000, stock);
         product.purchase(buyQuantity);
 
         assertEquals(stockAfterBuy, product.getStock());
@@ -34,7 +34,7 @@ class NEWProductTest {
     @Test
     void test3() {
         ProductQuantity productStock = new ProductQuantity(1, 0);
-        NEWProduct product = new NEWProduct("ABC", 1000, productStock);
+        Product product = new Product("ABC", 1000, productStock);
         assertThrows(IllegalArgumentException.class, () -> product.purchase(0));
     }
 
@@ -42,7 +42,7 @@ class NEWProductTest {
     @Test
     void test4() {
         ProductQuantity productStock = new ProductQuantity(1, 0);
-        NEWProduct product = new NEWProduct("콜라", 1000, productStock);
+        Product product = new Product("콜라", 1000, productStock);
 
         assertEquals("콜라", product.getName());
         assertEquals(1000, product.getPrice());
@@ -55,7 +55,7 @@ class NEWProductTest {
         ProductQuantity productStock = new ProductQuantity(10, 10);
         String productName = "콜라";
         int productPrice = 1000;
-        NEWProduct product = new NEWProduct(productName, productPrice, productStock);
+        Product product = new Product(productName, productPrice, productStock);
 
         OrderLine result = product.purchase(10);
 
