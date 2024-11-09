@@ -14,7 +14,7 @@ class NEWProductTest {
     @DisplayName("상품 구매 시 재고가 부족하다면 예외가 발생한다.")
     @Test
     void test1() {
-        NEWProduct product = new NEWProduct(10, 0);
+        NEWProduct product = new NEWProduct("ABC", 1000,10, 0);
         assertThrows(IllegalStateException.class, () -> product.buy(11));
     }
 
@@ -22,7 +22,7 @@ class NEWProductTest {
     @ParameterizedTest(name = "{0}을 {1}개 구매 : 상품 재고 - {2}.{3}")
     @MethodSource("buyOptions")
     void test2(ProductQuantity productQuantity, int buyQuantity, int expectedPromotion, int expectedNormal) {
-        NEWProduct product = new NEWProduct(productQuantity.promotion, productQuantity.normal);
+        NEWProduct product = new NEWProduct("ABC", 1000, productQuantity.promotion, productQuantity.normal);
         product.buy(buyQuantity);
 
         assertEquals(expectedPromotion, product.getPromotionStock());
@@ -42,7 +42,7 @@ class NEWProductTest {
     @DisplayName("상품을 0개 구매하려 한다면 예외가 발생한다.")
     @Test
     void test3() {
-        NEWProduct product = new NEWProduct(1, 0);
+        NEWProduct product = new NEWProduct("ABC", 1000, 1, 0);
         assertThrows(IllegalArgumentException.class, () -> product.buy(0));
     }
 

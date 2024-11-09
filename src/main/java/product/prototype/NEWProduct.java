@@ -5,10 +5,14 @@ public class NEWProduct {
     private static final String EMPTY_STOCK_ERROR_MESSAGE = "재고가 부족합니다.";
     private static final int EMPTY_QUANTITY = 0;
 
+    private final String name;
+    private final int price;
     private int promotionStock;
     private int normalStock;
 
-    public NEWProduct(int promotionStock, int normalStock) {
+    public NEWProduct(String name, int price, int promotionStock, int normalStock) {
+        this.name = name;
+        this.price = price;
         this.promotionStock = promotionStock;
         this.normalStock = normalStock;
     }
@@ -39,5 +43,13 @@ public class NEWProduct {
 
     private int stock() {
         return promotionStock + normalStock;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }
