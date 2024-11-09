@@ -15,7 +15,7 @@ public class NEWProduct {
         this.productQuantity = productQuantity;
     }
 
-    public void buy(int quantity) {
+    public OrderLine buy(int quantity) {
         if(quantity == EMPTY_QUANTITY)
             throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
         if(productQuantity.stock() < quantity)
@@ -23,12 +23,16 @@ public class NEWProduct {
 
         if (productQuantity.promotion >= quantity) {
             productQuantity.promotion -= quantity;
-            return;
+            return new OrderLine(name, price, new ProductQuantity(quantity, 0));
         }
+
+        int promotionCnt = productQuantity.promotion;
         quantity -= productQuantity.promotion;
+        int normalCnt = quantity;
         productQuantity.promotion = 0;
 
         productQuantity.normal -= quantity;
+        return new OrderLine(name, price, new ProductQuantity(promotionCnt, normalCnt));
     }
 
     public int getPromotionStock() {
