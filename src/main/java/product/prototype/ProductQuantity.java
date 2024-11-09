@@ -1,7 +1,9 @@
 package product.prototype;
 
+import java.util.Objects;
+
 public class ProductQuantity {
-    private final String PRODUCT_QUANTITY_FORMAT = "상품재고{프로모션=%d, 일반=%d}";
+    private static final String PRODUCT_QUANTITY_FORMAT = "상품재고{프로모션=%d, 일반=%d}";
     public int promotion;
     public int normal;
 
@@ -12,6 +14,19 @@ public class ProductQuantity {
 
     public int stock() {
         return promotion + normal;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductQuantity that = (ProductQuantity) o;
+        return promotion == that.promotion && normal == that.normal;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(promotion, normal);
     }
 
     @Override
