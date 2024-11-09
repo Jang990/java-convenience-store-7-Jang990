@@ -39,6 +39,13 @@ class NEWProductTest {
         );
     }
 
+    @DisplayName("상품을 0개 구매하려 한다면 예외가 발생한다.")
+    @Test
+    void test3() {
+        NEWProduct product = new NEWProduct(1, 0);
+        assertThrows(IllegalArgumentException.class, () -> product.buy(0));
+    }
+
     static class ProductQuantity {
         public int promotion;
         public int normal;
