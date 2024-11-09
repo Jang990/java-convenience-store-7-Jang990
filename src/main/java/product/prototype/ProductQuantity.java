@@ -16,6 +16,14 @@ public class ProductQuantity {
         return promotion + normal;
     }
 
+    protected ProductQuantity decrease(int quantity) {
+        if (promotion >= quantity) {
+            return new ProductQuantity(promotion - quantity, normal);
+        }
+
+        return new ProductQuantity(0, normal - quantity + promotion);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
