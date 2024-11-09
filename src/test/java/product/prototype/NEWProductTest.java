@@ -61,4 +61,20 @@ class NEWProductTest {
         assertEquals(0,product.getNormalStock());
     }
 
+    @DisplayName("구매 후 구매정보를 확인할 수 있어야 한다.")
+    @Test
+    void test5() {
+        ProductQuantity productStock = new ProductQuantity(10, 10);
+        String productName = "콜라";
+        int productPrice = 1000;
+        NEWProduct product = new NEWProduct(productName, productPrice, productStock);
+
+        OrderLine result = product.buy(10);
+
+        assertEquals(productName, result.getProductName());
+        assertEquals(productPrice, result.getProductPrice());
+        assertEquals(10, result.getPromotionQuantity());
+        assertEquals(0, result.getNormalQuantity());
+    }
+
 }
