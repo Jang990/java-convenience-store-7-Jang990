@@ -7,40 +7,36 @@ public class NEWProduct {
 
     private final String name;
     private final int price;
-    private final ProductQuantity stock;
+    private final ProductQuantity productQuantity;
 
-    public NEWProduct(String name, int price, ProductQuantity stock) {
+    public NEWProduct(String name, int price, ProductQuantity productQuantity) {
         this.name = name;
         this.price = price;
-        this.stock = stock;
+        this.productQuantity = productQuantity;
     }
 
     public void buy(int quantity) {
         if(quantity == EMPTY_QUANTITY)
             throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
-        if(stock() < quantity)
+        if(productQuantity.stock() < quantity)
             throw new IllegalStateException(EMPTY_STOCK_ERROR_MESSAGE);
 
-        if (stock.promotion >= quantity) {
-            stock.promotion -= quantity;
+        if (productQuantity.promotion >= quantity) {
+            productQuantity.promotion -= quantity;
             return;
         }
-        quantity -= stock.promotion;
-        stock.promotion = 0;
+        quantity -= productQuantity.promotion;
+        productQuantity.promotion = 0;
 
-        stock.normal -= quantity;
+        productQuantity.normal -= quantity;
     }
 
     public int getPromotionStock() {
-        return stock.promotion;
+        return productQuantity.promotion;
     }
 
     public int getNormalStock() {
-        return stock.normal;
-    }
-
-    private int stock() {
-        return stock.promotion + stock.normal;
+        return productQuantity.normal;
     }
 
     public String getName() {

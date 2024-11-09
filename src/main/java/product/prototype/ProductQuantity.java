@@ -10,6 +10,10 @@ public class ProductQuantity {
         this.normal = normal;
     }
 
+    public int stock() {
+        return promotion + normal;
+    }
+
     @Override
     public String toString() {
         return PRODUCT_QUANTITY_FORMAT.formatted(promotion, normal);
