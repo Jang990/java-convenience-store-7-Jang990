@@ -13,8 +13,14 @@ public class NEWProduct {
         if(stock() < quantity)
             throw new IllegalStateException("재고가 부족합니다.");
 
-        promotionStock -= 2;
-        normalStock -= 1;
+        if (promotionStock >= quantity) {
+            promotionStock -= quantity;
+            return;
+        }
+        quantity -= promotionStock;
+        promotionStock = 0;
+
+        normalStock -= quantity;
     }
 
     public int getPromotionStock() {
