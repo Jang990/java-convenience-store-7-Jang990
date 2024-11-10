@@ -61,6 +61,17 @@ class NEWPromotionTest {
         );
     }
 
+    @DisplayName("프로모션 수량이 없다면 공짜 수량은 0을 반환한다.")
+    @Test
+    void test4() throws PromotionException {
+        NEWPromotion promotion = NEWPromotionTestBuilder.builder()
+                .type(PromotionType.ONE_PLUS_ONE)
+                .build();
+        ProductQuantity requested = toProductQuantity(0, 10);
+
+        assertEquals(toQuantity(0), promotion.calculateFree(requested));
+    }
+
     private static ProductQuantity toProductQuantity(int promotion, int normal) {
         return new ProductQuantity(toQuantity(promotion), toQuantity(normal));
     }
