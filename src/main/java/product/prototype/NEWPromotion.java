@@ -6,7 +6,7 @@ import product.exception.PromotionException;
 import java.time.LocalDate;
 
 public class NEWPromotion {
-    public final PromotionType promotionType;
+    private final PromotionType promotionType;
     private final PromotionDuration duration;
     private final String name;
 
@@ -29,18 +29,16 @@ public class NEWPromotion {
     }
 
     public Quantity calculateFree(ProductQuantity requested) throws PromotionException {
-        if(requested.isEmptyPromotionStock())
+        Bundles promotionBundles = requested.bundleUp(promotionType);
+        if(Quantity.isEmpty(promotionBundles))
             return Quantity.EMPTY;
 
-        Bundles requestedPromotionBundles = requested.stock()
-                .bundleUp(promotionType.getAppliedUnit());
-
-        if(requestedPromotionBundles.hasRemainder()
-                && requestedPromotionBundles.getShortFall().equals(promotionType.getFree()))
+        if (promotionBundles.getShortFall().equals(promotionType.getFree()))
             throw new PromotionException(
                     "무료 제공 수량이 있습니다.",
-                    requestedPromotionBundles.getShortFall()
+                    promotionType.getFree()
             );
+
 
         return null;
     }

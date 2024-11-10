@@ -40,6 +40,10 @@ public class ProductQuantity {
         return new ProductQuantity(new Quantity(0), normal.plus(promotion).minus(quantity));
     }
 
+    protected Bundles bundleUp(PromotionType type) {
+        return promotion.bundleUp(type.getAppliedUnit());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

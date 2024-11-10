@@ -1,6 +1,6 @@
 package product.prototype;
 
-public class Bundles extends product.Quantity {
+public class Bundles extends Quantity {
     private final Quantity remainder;
     private final Quantity unit;
 
@@ -18,5 +18,9 @@ public class Bundles extends product.Quantity {
         if(hasRemainder())
             return unit.minus(remainder);
         return Quantity.EMPTY;
+    }
+
+    public Quantity getBundledQuantity() {
+        return this.times(unit);
     }
 }
