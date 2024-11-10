@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import product.exception.MissedPromotionBenefitException;
+import product.exception.PartialProductExclusionException;
 import product.exception.PromotionException;
 
 import java.time.LocalDate;
@@ -48,8 +50,11 @@ class PromotionTest {
         Promotion promotion = PromotionTestBuilder.builder()
                 .type(buyNToGetN)
                 .build();
-        PromotionException exception = assertThrows(PromotionException.class, () -> promotion.calculateFree(requested));
-        assertEquals(ignoredFree, exception.getErrorQuantity());
+        MissedPromotionBenefitException exception = assertThrows(
+                MissedPromotionBenefitException.class,
+                () -> promotion.calculateFree(requested)
+        );
+        assertEquals(ignoredFree, exception.getMissingFreeQuantity());
     }
 
     static Stream<Arguments> ignoredFreeExceptionOptions() {
@@ -94,8 +99,11 @@ class PromotionTest {
         Promotion promotion = PromotionTestBuilder.builder()
                 .type(buyNToGetN)
                 .build();
-        PromotionException exception = assertThrows(PromotionException.class, () -> promotion.calculateFree(requested));
-        assertEquals(ignoredFree, exception.getErrorQuantity());
+        PartialProductExclusionException exception = assertThrows(
+                PartialProductExclusionException.class,
+                () -> promotion.calculateFree(requested)
+        );
+        assertEquals(ignoredFree, exception.getNonPromotionalQuantity());
     }
 
     static Stream<Arguments> ignoredFreeExceptionOptions2() {

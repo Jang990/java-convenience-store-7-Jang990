@@ -1,5 +1,7 @@
 package product;
 
+import product.exception.MissedPromotionBenefitException;
+import product.exception.PartialProductExclusionException;
 import product.exception.PromotionException;
 
 import java.time.LocalDate;
@@ -33,13 +35,13 @@ public class Promotion {
 
         PromotionBundles promotionBundles = requested.bundleUp(promotionType);
         if (requested.isOnlyPromotionQuantity() && promotionBundles.getShortFall().equals(promotionType.getFree()))
-            throw new PromotionException(
+            throw new MissedPromotionBenefitException(
                     "추가로 구매한다면 상품을 무료로 받을 수 있습니다.",
                     promotionType.getFree()
             );
 
         if (requested.hasNormalQuantity() || promotionBundles.hasRemainder())
-            throw new PromotionException(
+            throw new PartialProductExclusionException(
                     "몇 개는 프로모션이 적용되지 않아 정가로 구매해야 합니다.",
                     promotionBundles.getRemainder().plus(requested.getNormal())
             );
