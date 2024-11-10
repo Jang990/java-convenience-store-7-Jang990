@@ -44,6 +44,24 @@ public class ProductQuantity {
         return promotion.bundleUp(type.getAppliedUnit());
     }
 
+    public boolean isOnlyPromotionQuantity() {
+        return Quantity.isEmpty(normal)
+                && promotion.isGreaterThan(Quantity.EMPTY);
+    }
+
+    public boolean isOnlyNormalQuantity() {
+        return Quantity.isEmpty(promotion)
+                && normal.isGreaterThan(Quantity.EMPTY);
+    }
+
+    public boolean hasNormalQuantity() {
+        return !Quantity.isEmpty(normal);
+    }
+
+    protected Quantity getNormal() {
+        return normal;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,9 +78,5 @@ public class ProductQuantity {
     @Override
     public String toString() {
         return PRODUCT_QUANTITY_FORMAT.formatted(promotion.amount, normal.amount);
-    }
-
-    public boolean isEmptyPromotionStock() {
-        return Quantity.isEmpty(promotion);
     }
 }

@@ -85,8 +85,27 @@ class NEWPromotionTest {
     static Stream<Arguments> calculateFreeOptions() {
         return Stream.of(
                 Arguments.of(PromotionType.ONE_PLUS_ONE, toProductQuantity(4, 0), toQuantity(2)),
-                Arguments.of(PromotionType.TWO_PLUS_ONE, toProductQuantity(4, 0), toQuantity(1)),
                 Arguments.of(PromotionType.TWO_PLUS_ONE, toProductQuantity(6, 0), toQuantity(2))
+        );
+    }
+
+    @DisplayName("몇 개는 프로모션이 적용되지만 몇 개는 정가구매 해야 한다면 예외가 발생한다. 정가구매 수량을 공지한다.")
+    @ParameterizedTest(name = "{0} 행사에 요청한 {1} : 정가 구매 상품 {2}개")
+    @MethodSource("ignoredFreeExceptionOptions2")
+    void test6(PromotionType buyNToGetN, ProductQuantity requested, Quantity ignoredFree) {
+        NEWPromotion promotion = NEWPromotionTestBuilder.builder()
+                .type(buyNToGetN)
+                .build();
+        PromotionException exception = assertThrows(PromotionException.class, () -> promotion.calculateFree(requested));
+        assertEquals(ignoredFree, exception.getErrorQuantity());
+    }
+
+    static Stream<Arguments> ignoredFreeExceptionOptions2() {
+        return Stream.of(
+                Arguments.of(PromotionType.TWO_PLUS_ONE, toProductQuantity(3, 2), toQuantity(2)),
+                Arguments.of(PromotionType.TWO_PLUS_ONE, toProductQuantity(4, 0), toQuantity(1)),
+                Arguments.of(PromotionType.TWO_PLUS_ONE, toProductQuantity(3, 3), toQuantity(3)),
+                Arguments.of(PromotionType.ONE_PLUS_ONE, toProductQuantity(7, 3), toQuantity(4))
         );
     }
 

@@ -29,16 +29,21 @@ public class NEWPromotion {
     }
 
     public Quantity calculateFree(ProductQuantity requested) throws PromotionException {
-        Bundles promotionBundles = requested.bundleUp(promotionType);
-        if(Quantity.isEmpty(promotionBundles))
+        if(requested.isOnlyNormalQuantity())
             return Quantity.EMPTY;
 
-        if (promotionBundles.getShortFall().equals(promotionType.getFree()))
+        Bundles promotionBundles = requested.bundleUp(promotionType);
+        if (requested.isOnlyPromotionQuantity() && promotionBundles.getShortFall().equals(promotionType.getFree()))
             throw new PromotionException(
-                    "무료 제공 수량이 있습니다.",
+                    "추가로 구매한다면 상품을 무료로 받을 수 있습니다.",
                     promotionType.getFree()
             );
 
+        if (requested.hasNormalQuantity() || promotionBundles.hasRemainder())
+            throw new PromotionException(
+                    "몇 개는 프로모션이 적용되지 않아 정가로 구매해야 합니다.",
+                    promotionBundles.getRemainder().plus(requested.getNormal())
+            );
 
         return promotionBundles.times(promotionType.getFree());
     }

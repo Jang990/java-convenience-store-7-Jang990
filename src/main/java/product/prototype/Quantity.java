@@ -47,7 +47,7 @@ public class Quantity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Quantity)) return false;
         Quantity quantity = (Quantity) o;
         return amount == quantity.amount;
     }

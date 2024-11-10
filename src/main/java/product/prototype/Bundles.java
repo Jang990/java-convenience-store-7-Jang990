@@ -20,7 +20,7 @@ public class Bundles extends Quantity {
         return Quantity.EMPTY;
     }
 
-    public Quantity getBundledQuantity() {
-        return this.times(unit);
+    public Quantity getRemainder() {
+        return remainder;
     }
 }
