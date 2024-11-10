@@ -15,4 +15,8 @@ public enum PromotionType {
     public Quantity getAppliedUnit() {
         return required.plus(free);
     }
+
+    public Quantity getFree() {
+        return free;
+    }
 }

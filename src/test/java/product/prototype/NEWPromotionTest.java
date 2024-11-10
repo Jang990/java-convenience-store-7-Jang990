@@ -39,16 +39,16 @@ class NEWPromotionTest {
         assertEquals(promotion.toString(), promotionName);
     }
 
-    @DisplayName("프로모션 단위보다 적게 구매할 시 예외가 발생하고 얼마나 부족한지를 알려준다.")
+    @DisplayName("프로모션 무료 제공 수량이 있다면 예외가 발생하고 무료 제공 수량을 공지한다.")
     @Test
     void test3() {
         NEWPromotion promotion = NEWPromotionTestBuilder.builder()
                 .type(PromotionType.TWO_PLUS_ONE)
                 .build();
-        ProductQuantity requested = toProductQuantity(1, 0);
+        ProductQuantity requested = toProductQuantity(2, 0);
 
         PromotionException exception = assertThrows(PromotionException.class, () -> promotion.calculateFree(requested));
-        assertEquals(toQuantity(2), exception.getErrorQuantity());
+        assertEquals(toQuantity(1), exception.getErrorQuantity());
     }
 
     private ProductQuantity toProductQuantity(int promotion, int normal) {

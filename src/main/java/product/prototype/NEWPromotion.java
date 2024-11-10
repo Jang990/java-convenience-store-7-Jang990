@@ -32,9 +32,10 @@ public class NEWPromotion {
         Bundles requestedPromotionBundles = requested.stock()
                 .bundleUp(promotionType.getAppliedUnit());
 
-        if(requestedPromotionBundles.hasRemainder())
+        if(requestedPromotionBundles.hasRemainder()
+                && requestedPromotionBundles.getShortFall().equals(promotionType.getFree()))
             throw new PromotionException(
-                    "프로모션 적용 수량보다 적게 가져오셨습니다.",
+                    "무료 제공 수량이 있습니다.",
                     requestedPromotionBundles.getShortFall()
             );
     }
