@@ -65,6 +65,20 @@ class ProductTest {
         assertEquals(toQuantity(10), result.getProductToPay());
     }
 
+    @DisplayName("프로모션 적용 시 프로모션으로 받은 공짜 상품 수량과 지불해야할 수량을 파악할 수 있다.")
+    @Test
+    void test6() {
+        Product product = new Product(
+                "콜라", toMoney(1000),
+                toStock(10, 0),
+                PromotionTestBuilder.ONE_PLUS_ONE);
+
+        OrderLine result = product.purchase(toQuantity(10));
+
+        assertEquals(toQuantity(5), result.getProductToPay());
+        assertEquals(toQuantity(5), result.getFreeProduct());
+    }
+
     private static Money toMoney(int amount) {
         return new Money(amount);
     }

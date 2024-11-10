@@ -5,6 +5,9 @@ public class PromotionTestBuilder {
     public static final PromotionDuration DEFAULT_DURATION = PromotionDurationStub.withInPeriod;
     public static final String DEFAULT_NAME = "이벤트";
 
+    public static final Promotion ONE_PLUS_ONE = builder().build();
+    public static final Promotion TWO_PLUS_ONE = builder().type(PromotionType.TWO_PLUS_ONE).build();
+
     private PromotionType type;
     private PromotionDuration duration;
     private String name;

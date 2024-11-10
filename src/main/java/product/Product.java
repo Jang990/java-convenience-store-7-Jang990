@@ -13,7 +13,7 @@ public class Product {
 
     public Product(
             String name, Money price,
-            Promotion promotion, ProductQuantity productQuantity) {
+            ProductQuantity productQuantity, Promotion promotion) {
         this.name = name;
         this.price = price;
         this.promotion = promotion;
@@ -34,7 +34,7 @@ public class Product {
         ProductQuantity purchaseQuantity = calculatePurchaseQuantity(requested);
         productQuantity = productQuantity.decrease(requested);
 
-        return new OrderLine(name, price, purchaseQuantity.stock(), null);
+        return new OrderLine(name, price, purchaseQuantity.stock(), Quantity.EMPTY);
     }
 
     private ProductQuantity calculatePurchaseQuantity(Quantity requested) {
