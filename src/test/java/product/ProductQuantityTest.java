@@ -31,10 +31,10 @@ class ProductQuantityTest {
     @Test
     void test2() {
         ProductQuantity quantity = quantity(2, 2);
-        assertEquals(quantity(1, 2), quantity.decrease(1));
-        assertEquals(quantity(0, 2), quantity.decrease(2));
-        assertEquals(quantity(0, 1), quantity.decrease(3));
-        assertEquals(quantity(0, 0), quantity.decrease(4));
+        assertEquals(quantity(1, 2), quantity.decrease(toQuantity(1)));
+        assertEquals(quantity(0, 2), quantity.decrease(toQuantity(2)));
+        assertEquals(quantity(0, 1), quantity.decrease(toQuantity(3)));
+        assertEquals(quantity(0, 0), quantity.decrease(toQuantity(4)));
     }
 
     @DisplayName("많은 재고에서 적은 재고의 차이를 확인하려 하면 예외가 발생한다.")
@@ -64,7 +64,8 @@ class ProductQuantityTest {
     @DisplayName("재고를 감소하려고 시도할 떄 재고가 0보다 작으면 예외가 발생한다.")
     @Test
     void test5() {
-        assertThrows(IllegalStateException.class, () -> quantity(1, 1).decrease(10));
+        assertThrows(IllegalStateException.class,
+                () -> quantity(1, 1).decrease(toQuantity(10)));
     }
 
     private static ProductQuantity quantity(int promotion, int normal) {

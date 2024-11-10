@@ -30,8 +30,7 @@ public class ProductQuantity {
         );
     }
 
-    protected ProductQuantity decrease(int quantityNum) {
-        Quantity quantity = new Quantity(quantityNum);
+    protected ProductQuantity decrease(Quantity quantity) {
         if(stock().isLessThan(quantity))
             throw new IllegalStateException(EMPTY_STOCK_ERROR_MESSAGE);
 

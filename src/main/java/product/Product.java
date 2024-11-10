@@ -20,14 +20,14 @@ public class Product {
         if(Quantity.isEmpty(requested))
             throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
 
-        ProductQuantity purchaseQuantity = calculatePurchaseQuantity(requested.amount);
-        productQuantity = productQuantity.decrease(requested.amount);
+        ProductQuantity purchaseQuantity = calculatePurchaseQuantity(requested);
+        productQuantity = productQuantity.decrease(requested);
 
         return new OrderLine(name, price, purchaseQuantity.stock(), null);
     }
 
-    private ProductQuantity calculatePurchaseQuantity(int quantity) {
-        ProductQuantity quantityAfterPurchase = productQuantity.decrease(quantity);
+    private ProductQuantity calculatePurchaseQuantity(Quantity requested) {
+        ProductQuantity quantityAfterPurchase = productQuantity.decrease(requested);
         return productQuantity.calculateDifference(quantityAfterPurchase);
     }
 
