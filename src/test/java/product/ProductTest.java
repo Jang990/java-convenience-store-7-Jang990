@@ -24,17 +24,17 @@ class ProductTest {
 
     static Stream<Arguments> buyOptions() {
         return Stream.of(
-                Arguments.of(toProductQuantity(2, 2), 1, toProductQuantity(1, 2)),
-                Arguments.of(toProductQuantity(2, 2), 2, toProductQuantity(0, 2)),
-                Arguments.of(toProductQuantity(2, 2), 3, toProductQuantity(0, 1)),
-                Arguments.of(toProductQuantity(2, 2), 4, toProductQuantity(0, 0))
+                Arguments.of(toStock(2, 2), 1, toStock(1, 2)),
+                Arguments.of(toStock(2, 2), 2, toStock(0, 2)),
+                Arguments.of(toStock(2, 2), 3, toStock(0, 1)),
+                Arguments.of(toStock(2, 2), 4, toStock(0, 0))
         );
     }
 
     @DisplayName("상품을 0개 구매하려 한다면 예외가 발생한다.")
     @Test
     void test3() {
-        ProductQuantity productStock = toProductQuantity(1, 0);
+        ProductQuantity productStock = toStock(1, 0);
         Product product = new Product("ABC", toMoney(1000), productStock);
         assertThrows(IllegalArgumentException.class, () -> product.purchase(toQuantity(0)));
     }
@@ -42,7 +42,7 @@ class ProductTest {
     @DisplayName("상품의 가격, 재고, 이름을 설정할 수 있다.")
     @Test
     void test4() {
-        ProductQuantity productStock = toProductQuantity(1, 0);
+        ProductQuantity productStock = toStock(1, 0);
         Product product = new Product("콜라", toMoney(1000), productStock);
 
         assertEquals("콜라", product.getName());
@@ -53,7 +53,7 @@ class ProductTest {
     @DisplayName("구매 후 구매정보를 확인할 수 있어야 한다.")
     @Test
     void test5() {
-        ProductQuantity productStock = toProductQuantity(10, 10);
+        ProductQuantity productStock = toStock(10, 10);
         String productName = "콜라";
         Money productPrice = toMoney(1000);
         Product product = new Product(productName, productPrice, productStock);
@@ -68,7 +68,7 @@ class ProductTest {
     private static Money toMoney(int amount) {
         return new Money(amount);
     }
-    private static ProductQuantity toProductQuantity(int promotion, int normal) {
+    private static ProductQuantity toStock(int promotion, int normal) {
         return new ProductQuantity(toQuantity(promotion), toQuantity(normal));
     }
 
