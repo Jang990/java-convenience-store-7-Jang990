@@ -1,10 +1,10 @@
 package product.prototype;
 
-public class Bundles extends Quantity {
+public class PromotionBundles extends Quantity {
     private final Quantity remainder;
     private final Quantity unit;
 
-    public Bundles(Quantity base, Quantity unit) {
+    public PromotionBundles(Quantity base, Quantity unit) {
         super(base.amount / unit.amount);
         remainder = new Quantity(base.amount % unit.amount);
         this.unit = unit;

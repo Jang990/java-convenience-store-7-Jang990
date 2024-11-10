@@ -39,8 +39,8 @@ public class Quantity {
         return amount > quantity.amount;
     }
 
-    public Bundles bundleUp(Quantity unit) {
-        return new Bundles(this, unit);
+    public PromotionBundles bundleUp(Quantity unit) {
+        return new PromotionBundles(this, unit);
     }
     
     @Override

@@ -32,7 +32,7 @@ public class NEWPromotion {
         if(requested.isOnlyNormalQuantity())
             return Quantity.EMPTY;
 
-        Bundles promotionBundles = requested.bundleUp(promotionType);
+        PromotionBundles promotionBundles = requested.bundleUp(promotionType);
         if (requested.isOnlyPromotionQuantity() && promotionBundles.getShortFall().equals(promotionType.getFree()))
             throw new PromotionException(
                     "추가로 구매한다면 상품을 무료로 받을 수 있습니다.",

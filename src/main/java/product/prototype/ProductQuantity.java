@@ -40,7 +40,7 @@ public class ProductQuantity {
         return new ProductQuantity(new Quantity(0), normal.plus(promotion).minus(quantity));
     }
 
-    protected Bundles bundleUp(PromotionType type) {
+    protected PromotionBundles bundleUp(PromotionType type) {
         return promotion.bundleUp(type.getAppliedUnit());
     }
 
