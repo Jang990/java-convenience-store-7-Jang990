@@ -1,6 +1,7 @@
 package product.prototype;
 
 import product.PromotionDuration;
+import product.exception.PromotionException;
 
 import java.time.LocalDate;
 
@@ -25,5 +26,17 @@ public class NEWPromotion {
     @Override
     public String toString() {
         return name;
+    }
+
+    public void calculateFree(ProductQuantity requested) throws PromotionException {
+        Bundles requestedPromotionBundles = requested.stock()
+                .bundleUp(promotionType.getAppliedUnit());
+
+        if(requestedPromotionBundles.hasRemainder())
+            throw new PromotionException(
+                    "프로모션 적용 수량보다 적게 가져오셨습니다.",
+                    promotionType.getAppliedUnit()
+                            .minus(requestedPromotionBundles.getRemainder())
+            );
     }
 }

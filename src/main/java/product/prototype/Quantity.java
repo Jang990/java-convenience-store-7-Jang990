@@ -5,6 +5,8 @@ import java.util.Objects;
 public class Quantity {
     private static final int EMPTY_AMOUNT = 0;
     private static final String MINUS_QUANTITY_ERROR_MESSAGE = "수량은 마이너스가 될 수 없습니다.";
+    public static final Quantity EMPTY = new Quantity(EMPTY_AMOUNT);
+
     public final int amount;
 
     public Quantity(int amount) {
@@ -27,6 +29,10 @@ public class Quantity {
 
     public boolean isGreaterThan(Quantity quantity) {
         return amount > quantity.amount;
+    }
+
+    public Bundles bundleUp(Quantity unit) {
+        return new Bundles(this, unit);
     }
 
 

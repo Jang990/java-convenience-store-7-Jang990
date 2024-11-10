@@ -11,4 +11,8 @@ public enum PromotionType {
         this.required = new Quantity(required);
         this.free = new Quantity(free);
     }
+
+    public Quantity getAppliedUnit() {
+        return required.plus(free);
+    }
 }
