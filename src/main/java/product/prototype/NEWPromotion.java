@@ -35,8 +35,7 @@ public class NEWPromotion {
         if(requestedPromotionBundles.hasRemainder())
             throw new PromotionException(
                     "프로모션 적용 수량보다 적게 가져오셨습니다.",
-                    promotionType.getAppliedUnit()
-                            .minus(requestedPromotionBundles.getRemainder())
+                    requestedPromotionBundles.getShortFall()
             );
     }
 }

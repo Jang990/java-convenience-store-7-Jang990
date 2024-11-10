@@ -14,7 +14,7 @@ public class Bundles extends product.Quantity {
         return remainder.isGreaterThan(Quantity.EMPTY);
     }
 
-    public Quantity getRemainder() {
-        return remainder;
+    public Quantity getShortFall() {
+        return unit.minus(remainder);
     }
 }
