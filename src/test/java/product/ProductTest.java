@@ -1,5 +1,6 @@
 package product;
 
+import money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +16,7 @@ class ProductTest {
     @ParameterizedTest(name = "{0}을 {1}개 구매 : 상품 재고 - {2}.{3}")
     @MethodSource("buyOptions")
     void test2(ProductQuantity stock, int buyQuantity, ProductQuantity stockAfterBuy) {
-        Product product = new Product("ABC", 1000, stock);
+        Product product = new Product("ABC", toMoney(1000), stock);
         product.purchase(buyQuantity);
 
         assertEquals(stockAfterBuy, product.getStock());
@@ -34,7 +35,7 @@ class ProductTest {
     @Test
     void test3() {
         ProductQuantity productStock = toProductQuantity(1, 0);
-        Product product = new Product("ABC", 1000, productStock);
+        Product product = new Product("ABC", toMoney(1000), productStock);
         assertThrows(IllegalArgumentException.class, () -> product.purchase(0));
     }
 
@@ -42,10 +43,10 @@ class ProductTest {
     @Test
     void test4() {
         ProductQuantity productStock = toProductQuantity(1, 0);
-        Product product = new Product("콜라", 1000, productStock);
+        Product product = new Product("콜라", toMoney(1000), productStock);
 
         assertEquals("콜라", product.getName());
-        assertEquals(1000, product.getPrice());
+        assertEquals(toMoney(1000), product.getPrice());
         assertEquals(productStock, product.getStock());
     }
 
@@ -54,7 +55,7 @@ class ProductTest {
     void test5() {
         ProductQuantity productStock = toProductQuantity(10, 10);
         String productName = "콜라";
-        int productPrice = 1000;
+        Money productPrice = toMoney(1000);
         Product product = new Product(productName, productPrice, productStock);
 
         OrderLine result = product.purchase(10);
@@ -64,6 +65,9 @@ class ProductTest {
         assertEquals(toQuantity(10), result.getProductToPay());
     }
 
+    private static Money toMoney(int amount) {
+        return new Money(amount);
+    }
     private static ProductQuantity toProductQuantity(int promotion, int normal) {
         return new ProductQuantity(toQuantity(promotion), toQuantity(normal));
     }

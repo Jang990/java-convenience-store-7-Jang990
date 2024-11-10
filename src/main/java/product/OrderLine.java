@@ -1,13 +1,15 @@
 package product;
 
+import money.Money;
+
 public class OrderLine {
     private final String productName;
-    private final int productPrice;
+    private final Money productPrice;
     private final Quantity productToPay;
     private final Quantity freeProduct;
 
     public OrderLine(
-            String productName, int productPrice,
+            String productName, Money productPrice,
             Quantity productToPay, Quantity freeProduct) {
         this.productName = productName;
         this.productPrice = productPrice;
@@ -15,7 +17,7 @@ public class OrderLine {
         this.freeProduct = freeProduct;
     }
 
-    public int getProductPrice() {
+    public Money getProductPrice() {
         return productPrice;
     }
 
