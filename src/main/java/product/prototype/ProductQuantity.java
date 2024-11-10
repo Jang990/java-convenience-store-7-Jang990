@@ -57,4 +57,8 @@ public class ProductQuantity {
     public String toString() {
         return PRODUCT_QUANTITY_FORMAT.formatted(promotion.amount, normal.amount);
     }
+
+    public boolean isEmptyPromotionStock() {
+        return promotion.equals(Quantity.EMPTY);
+    }
 }

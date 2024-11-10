@@ -28,7 +28,10 @@ public class NEWPromotion {
         return name;
     }
 
-    public void calculateFree(ProductQuantity requested) throws PromotionException {
+    public Quantity calculateFree(ProductQuantity requested) throws PromotionException {
+        if(requested.isEmptyPromotionStock())
+            return Quantity.EMPTY;
+
         Bundles requestedPromotionBundles = requested.stock()
                 .bundleUp(promotionType.getAppliedUnit());
 
@@ -38,5 +41,7 @@ public class NEWPromotion {
                     "무료 제공 수량이 있습니다.",
                     requestedPromotionBundles.getShortFall()
             );
+
+        return null;
     }
 }
