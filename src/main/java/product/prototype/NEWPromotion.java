@@ -45,6 +45,7 @@ public class NEWPromotion {
                     promotionBundles.getRemainder().plus(requested.getNormal())
             );
 
-        return promotionBundles.times(promotionType.getFree());
+        return promotionType.getFree()
+                .times(promotionBundles.getAmount());
     }
 }

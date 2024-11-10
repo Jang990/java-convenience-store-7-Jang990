@@ -1,11 +1,12 @@
 package product.prototype;
 
-public class PromotionBundles extends Quantity {
+public class PromotionBundles {
+    private final Quantity amount;
     private final Quantity remainder;
     private final PromotionType appliedPromotion;
 
     public PromotionBundles(Quantity base, PromotionType appliedPromotion) {
-        super(base.amount / appliedPromotion.getAppliedUnit().amount);
+        amount = base.divide(appliedPromotion.getAppliedUnit());
         this.remainder = new Quantity(base.amount % appliedPromotion.getAppliedUnit().amount);
         this.appliedPromotion = appliedPromotion;
     }
@@ -22,5 +23,9 @@ public class PromotionBundles extends Quantity {
 
     public Quantity getRemainder() {
         return remainder;
+    }
+
+    public Quantity getAmount() {
+        return amount;
     }
 }

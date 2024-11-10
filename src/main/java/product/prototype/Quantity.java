@@ -27,6 +27,10 @@ public class Quantity {
         return new Quantity(amount - quantity.amount);
     }
 
+    public Quantity divide(Quantity quantity) {
+        return new Quantity(amount / quantity.amount);
+    }
+
     public Quantity times(Quantity quantity) {
         return new Quantity(amount * quantity.amount);
     }
