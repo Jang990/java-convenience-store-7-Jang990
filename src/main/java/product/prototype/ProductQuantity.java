@@ -59,6 +59,6 @@ public class ProductQuantity {
     }
 
     public boolean isEmptyPromotionStock() {
-        return promotion.equals(Quantity.EMPTY);
+        return Quantity.isEmpty(promotion);
     }
 }

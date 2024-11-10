@@ -11,7 +11,7 @@ public class Bundles extends product.Quantity {
     }
 
     public boolean hasRemainder() {
-        return remainder.isGreaterThan(Quantity.EMPTY);
+        return !Quantity.isEmpty(remainder);
     }
 
     public Quantity getShortFall() {
