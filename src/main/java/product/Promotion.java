@@ -4,12 +4,12 @@ import product.exception.PromotionException;
 
 import java.time.LocalDate;
 
-public class NEWPromotion {
+public class Promotion {
     private final PromotionType promotionType;
     private final PromotionDuration duration;
     private final String name;
 
-    public NEWPromotion(
+    public Promotion(
             PromotionType promotionType,
             PromotionDuration duration,
             String name) {

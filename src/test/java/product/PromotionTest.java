@@ -13,12 +13,12 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NEWPromotionTest {
+class PromotionTest {
 
     static final LocalDate now = LocalDate.from(DateTimes.now());
 
-    private static NEWPromotion promotion(PromotionDuration duration) {
-        return NEWPromotionTestBuilder.builder()
+    private static Promotion promotion(PromotionDuration duration) {
+        return PromotionTestBuilder.builder()
                 .duration(duration)
                 .build();
     }
@@ -34,7 +34,7 @@ class NEWPromotionTest {
     @Test
     void test2() {
         String promotionName = "MD추천상품";
-        NEWPromotion promotion = NEWPromotionTestBuilder.builder()
+        Promotion promotion = PromotionTestBuilder.builder()
                 .name(promotionName)
                 .build();
 
@@ -45,7 +45,7 @@ class NEWPromotionTest {
     @ParameterizedTest(name = "{0} 행사에 요청한 {1} : 무시된 무료 제공 상품 {2}개")
     @MethodSource("ignoredFreeExceptionOptions")
     void test3(PromotionType buyNToGetN, ProductQuantity requested, Quantity ignoredFree) {
-        NEWPromotion promotion = NEWPromotionTestBuilder.builder()
+        Promotion promotion = PromotionTestBuilder.builder()
                 .type(buyNToGetN)
                 .build();
         PromotionException exception = assertThrows(PromotionException.class, () -> promotion.calculateFree(requested));
@@ -62,7 +62,7 @@ class NEWPromotionTest {
     @DisplayName("프로모션 수량이 없다면 공짜 수량은 0을 반환한다.")
     @Test
     void test4() throws PromotionException {
-        NEWPromotion promotion = NEWPromotionTestBuilder.builder()
+        Promotion promotion = PromotionTestBuilder.builder()
                 .type(PromotionType.ONE_PLUS_ONE)
                 .build();
         ProductQuantity requested = toProductQuantity(0, 10);
@@ -74,7 +74,7 @@ class NEWPromotionTest {
     @ParameterizedTest(name = "{0} 행사에 요청한 {1} : 무료 제공 상품 {2}개")
     @MethodSource("calculateFreeOptions")
     void test5(PromotionType buyNToGetN, ProductQuantity requested, Quantity free) throws PromotionException {
-        NEWPromotion promotion = NEWPromotionTestBuilder.builder()
+        Promotion promotion = PromotionTestBuilder.builder()
                 .type(buyNToGetN)
                 .build();
         assertEquals(free, promotion.calculateFree(requested));
@@ -91,7 +91,7 @@ class NEWPromotionTest {
     @ParameterizedTest(name = "{0} 행사에 요청한 {1} : 정가 구매 상품 {2}개")
     @MethodSource("ignoredFreeExceptionOptions2")
     void test6(PromotionType buyNToGetN, ProductQuantity requested, Quantity ignoredFree) {
-        NEWPromotion promotion = NEWPromotionTestBuilder.builder()
+        Promotion promotion = PromotionTestBuilder.builder()
                 .type(buyNToGetN)
                 .build();
         PromotionException exception = assertThrows(PromotionException.class, () -> promotion.calculateFree(requested));
