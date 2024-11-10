@@ -15,6 +15,8 @@ public class Bundles extends product.Quantity {
     }
 
     public Quantity getShortFall() {
-        return unit.minus(remainder);
+        if(hasRemainder())
+            return unit.minus(remainder);
+        return Quantity.EMPTY;
     }
 }
