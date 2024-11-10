@@ -1,7 +1,9 @@
-package product.prototype;
+package product;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import product.ProductQuantity;
+import product.Quantity;
 
 import static org.junit.jupiter.api.Assertions.*;
 

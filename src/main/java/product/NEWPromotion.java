@@ -1,6 +1,5 @@
-package product.prototype;
+package product;
 
-import product.PromotionDuration;
 import product.exception.PromotionException;
 
 import java.time.LocalDate;

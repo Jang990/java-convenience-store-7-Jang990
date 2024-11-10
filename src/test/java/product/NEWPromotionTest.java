@@ -1,4 +1,4 @@
-package product.prototype;
+package product;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import org.junit.jupiter.api.DisplayName;
@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import product.PromotionDuration;
-import product.PromotionDurationStub;
 import product.exception.PromotionException;
 
 import java.time.LocalDate;

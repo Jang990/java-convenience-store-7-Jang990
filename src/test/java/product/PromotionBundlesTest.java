@@ -1,7 +1,10 @@
-package product.prototype;
+package product;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import product.PromotionBundles;
+import product.PromotionType;
+import product.Quantity;
 
 import static org.junit.jupiter.api.Assertions.*;
 

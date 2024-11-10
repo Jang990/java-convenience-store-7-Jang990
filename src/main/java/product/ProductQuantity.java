@@ -1,4 +1,4 @@
-package product.prototype;
+package product;
 
 import java.util.Objects;
 

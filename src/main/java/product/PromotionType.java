@@ -1,4 +1,4 @@
-package product.prototype;
+package product;
 
 public enum PromotionType {
     ONE_PLUS_ONE(1,1),

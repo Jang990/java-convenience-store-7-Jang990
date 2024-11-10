@@ -1,4 +1,4 @@
-package product.prototype;
+package product;
 
 public class PromotionBundles {
     private final Quantity amount;

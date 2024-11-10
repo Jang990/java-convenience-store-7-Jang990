@@ -1,6 +1,4 @@
-package product.prototype;
-
-import product.*;
+package product;
 
 public class NEWPromotionTestBuilder {
     public static final PromotionType DEFAULT_TYPE = PromotionType.ONE_PLUS_ONE;

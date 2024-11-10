@@ -1,6 +1,6 @@
 package product.exception;
 
-import product.prototype.Quantity;
+import product.Quantity;
 
 public class PromotionException extends Exception {
     private final Quantity error;

@@ -1,4 +1,4 @@
-package product.prototype;
+package product;
 
 public class Product {
     private static final String REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE = "0개를 구매할 수 없습니다.";

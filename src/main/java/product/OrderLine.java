@@ -1,4 +1,4 @@
-package product.prototype;
+package product;
 
 public class OrderLine {
     private final String productName;

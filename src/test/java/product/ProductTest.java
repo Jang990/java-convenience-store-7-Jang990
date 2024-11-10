@@ -1,10 +1,14 @@
-package product.prototype;
+package product;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import product.OrderLine;
+import product.Product;
+import product.ProductQuantity;
+import product.Quantity;
 
 import java.util.stream.Stream;
 
