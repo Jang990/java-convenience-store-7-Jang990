@@ -67,17 +67,27 @@ class ProductTest {
     }
 
     @DisplayName("프로모션 적용 시 프로모션으로 받은 공짜 상품 수량과 지불해야할 수량을 파악할 수 있다.")
-    @Test
-    void test6() throws PromotionException {
+    @ParameterizedTest
+    @MethodSource("applyPromotionOptions")
+    void test6(int promotionStock, Promotion promotion, int purchase,
+               int expectedToPay, int expectedFree) throws PromotionException {
         Product product = new Product(
                 "콜라", toMoney(1000),
-                toStock(10, 0),
-                PromotionTestBuilder.ONE_PLUS_ONE);
+                toStock(promotionStock, 0),
+                promotion
+        );
 
-        OrderLine result = product.purchase(toQuantity(10));
+        OrderLine result = product.purchase(toQuantity(purchase));
 
-        assertEquals(toQuantity(5), result.getProductToPay());
-        assertEquals(toQuantity(5), result.getFreeProduct());
+        assertEquals(toQuantity(expectedToPay), result.getProductToPay());
+        assertEquals(toQuantity(expectedFree), result.getFreeProduct());
+    }
+
+    static Stream<Arguments> applyPromotionOptions() {
+        return Stream.of(
+                Arguments.of(10, PromotionTestBuilder.ONE_PLUS_ONE, 10, 5, 5),
+                Arguments.of(10, PromotionTestBuilder.TWO_PLUS_ONE, 6, 4, 2)
+        );
     }
 
     private static Money toMoney(int amount) {
