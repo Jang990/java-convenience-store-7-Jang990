@@ -42,12 +42,11 @@ public class Quantity {
     public Bundles bundleUp(Quantity unit) {
         return new Bundles(this, unit);
     }
-
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Quantity)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Quantity quantity = (Quantity) o;
         return amount == quantity.amount;
     }
