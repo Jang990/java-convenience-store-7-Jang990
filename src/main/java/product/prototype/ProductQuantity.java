@@ -41,7 +41,7 @@ public class ProductQuantity {
     }
 
     protected PromotionBundles bundleUp(PromotionType type) {
-        return promotion.bundleUp(type.getAppliedUnit());
+        return new PromotionBundles(promotion, type);
     }
 
     public boolean isOnlyPromotionQuantity() {

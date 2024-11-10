@@ -2,21 +2,12 @@ package product.prototype;
 
 public class PromotionBundles extends Quantity {
     private final Quantity remainder;
-    private final Quantity unit;
     private final PromotionType appliedPromotion;
 
     public PromotionBundles(Quantity base, PromotionType appliedPromotion) {
         super(base.amount / appliedPromotion.getAppliedUnit().amount);
-        this.unit = appliedPromotion.getAppliedUnit();
-        this.remainder = new Quantity(base.amount % unit.amount);
+        this.remainder = new Quantity(base.amount % appliedPromotion.getAppliedUnit().amount);
         this.appliedPromotion = appliedPromotion;
-    }
-
-    public PromotionBundles(Quantity base, Quantity unit) {
-        super(base.amount / unit.amount);
-        remainder = new Quantity(base.amount % unit.amount);
-        this.unit = unit;
-        appliedPromotion = null;
     }
 
     public boolean hasRemainder() {
@@ -25,7 +16,7 @@ public class PromotionBundles extends Quantity {
 
     public Quantity getShortFall() {
         if(hasRemainder())
-            return unit.minus(remainder);
+            return appliedPromotion.getAppliedUnit().minus(remainder);
         return Quantity.EMPTY;
     }
 

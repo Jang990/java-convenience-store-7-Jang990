@@ -38,10 +38,6 @@ public class Quantity {
     public boolean isGreaterThan(Quantity quantity) {
         return amount > quantity.amount;
     }
-
-    public PromotionBundles bundleUp(Quantity unit) {
-        return new PromotionBundles(this, unit);
-    }
     
     @Override
     public boolean equals(Object o) {
