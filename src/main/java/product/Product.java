@@ -16,12 +16,12 @@ public class Product {
         this.productQuantity = productQuantity;
     }
 
-    public OrderLine purchase(int quantity) {
-        if(quantity == EMPTY_QUANTITY)
+    public OrderLine purchase(Quantity requested) {
+        if(Quantity.isEmpty(requested))
             throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
 
-        ProductQuantity purchaseQuantity = calculatePurchaseQuantity(quantity);
-        productQuantity = productQuantity.decrease(quantity);
+        ProductQuantity purchaseQuantity = calculatePurchaseQuantity(requested.amount);
+        productQuantity = productQuantity.decrease(requested.amount);
 
         return new OrderLine(name, price, purchaseQuantity.stock(), null);
     }

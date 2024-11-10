@@ -17,7 +17,7 @@ class ProductTest {
     @MethodSource("buyOptions")
     void test2(ProductQuantity stock, int buyQuantity, ProductQuantity stockAfterBuy) {
         Product product = new Product("ABC", toMoney(1000), stock);
-        product.purchase(buyQuantity);
+        product.purchase(toQuantity(buyQuantity));
 
         assertEquals(stockAfterBuy, product.getStock());
     }
@@ -36,7 +36,7 @@ class ProductTest {
     void test3() {
         ProductQuantity productStock = toProductQuantity(1, 0);
         Product product = new Product("ABC", toMoney(1000), productStock);
-        assertThrows(IllegalArgumentException.class, () -> product.purchase(0));
+        assertThrows(IllegalArgumentException.class, () -> product.purchase(toQuantity(0)));
     }
 
     @DisplayName("상품의 가격, 재고, 이름을 설정할 수 있다.")
@@ -58,7 +58,7 @@ class ProductTest {
         Money productPrice = toMoney(1000);
         Product product = new Product(productName, productPrice, productStock);
 
-        OrderLine result = product.purchase(10);
+        OrderLine result = product.purchase(toQuantity(10));
 
         assertEquals(productName, result.getProductName());
         assertEquals(productPrice, result.getProductPrice());
