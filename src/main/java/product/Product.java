@@ -8,12 +8,23 @@ public class Product {
 
     private final String name;
     private final Money price;
+    private final Promotion promotion;
     private ProductQuantity productQuantity;
+
+    public Product(
+            String name, Money price,
+            Promotion promotion, ProductQuantity productQuantity) {
+        this.name = name;
+        this.price = price;
+        this.promotion = promotion;
+        this.productQuantity = productQuantity;
+    }
 
     public Product(String name, Money price, ProductQuantity productQuantity) {
         this.name = name;
         this.price = price;
         this.productQuantity = productQuantity;
+        promotion = null;
     }
 
     public OrderLine purchase(Quantity requested) {
