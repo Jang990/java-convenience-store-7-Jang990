@@ -3,23 +3,30 @@ package product;
 public class OrderLine {
     private final String productName;
     private final int productPrice;
-    private final ProductQuantity purchaseQuantity;
+    private final Quantity productToPay;
+    private final Quantity freeProduct;
 
-    public OrderLine(String productName, int productPrice, ProductQuantity purchaseQuantity) {
+    public OrderLine(
+            String productName, int productPrice,
+            Quantity productToPay, Quantity freeProduct) {
         this.productName = productName;
         this.productPrice = productPrice;
-        this.purchaseQuantity = purchaseQuantity;
-    }
-
-    public String getProductName() {
-        return productName;
+        this.productToPay = productToPay;
+        this.freeProduct = freeProduct;
     }
 
     public int getProductPrice() {
         return productPrice;
     }
 
-    public ProductQuantity getPurchaseQuantity() {
-        return purchaseQuantity;
+    public String getProductName() {
+        return productName;
+    }
+
+    public Quantity getProductToPay() {
+        return productToPay;
+    }
+    public Quantity getFreeProduct() {
+        return freeProduct;
     }
 }

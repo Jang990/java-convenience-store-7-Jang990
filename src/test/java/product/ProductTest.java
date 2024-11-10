@@ -5,10 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import product.OrderLine;
-import product.Product;
-import product.ProductQuantity;
-import product.Quantity;
 
 import java.util.stream.Stream;
 
@@ -65,7 +61,7 @@ class ProductTest {
 
         assertEquals(productName, result.getProductName());
         assertEquals(productPrice, result.getProductPrice());
-        assertEquals(toProductQuantity(10, 0), result.getPurchaseQuantity());
+        assertEquals(toQuantity(10), result.getProductToPay());
     }
 
     private static ProductQuantity toProductQuantity(int promotion, int normal) {

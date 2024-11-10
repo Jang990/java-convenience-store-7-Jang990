@@ -19,12 +19,9 @@ public class Product {
             throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
 
         ProductQuantity purchaseQuantity = calculatePurchaseQuantity(quantity);
-        decreaseProductQuantity(quantity);
-        return new OrderLine(name, price, purchaseQuantity);
-    }
-
-    private void decreaseProductQuantity(int quantity) {
         productQuantity = productQuantity.decrease(quantity);
+
+        return new OrderLine(name, price, purchaseQuantity.stock(), null);
     }
 
     private ProductQuantity calculatePurchaseQuantity(int quantity) {
