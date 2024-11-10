@@ -40,6 +40,6 @@ public class NEWPromotion {
             );
 
 
-        return null;
+        return promotionBundles.times(promotionType.getFree());
     }
 }

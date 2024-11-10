@@ -72,6 +72,24 @@ class NEWPromotionTest {
         assertEquals(toQuantity(0), promotion.calculateFree(requested));
     }
 
+    @DisplayName("프로모션을 적용했을 때의 무료 수량을 확인할 수 있다.")
+    @ParameterizedTest(name = "{0} 행사에 요청한 {1} : 무료 제공 상품 {2}개")
+    @MethodSource("calculateFreeOptions")
+    void test5(PromotionType buyNToGetN, ProductQuantity requested, Quantity free) throws PromotionException {
+        NEWPromotion promotion = NEWPromotionTestBuilder.builder()
+                .type(buyNToGetN)
+                .build();
+        assertEquals(free, promotion.calculateFree(requested));
+    }
+
+    static Stream<Arguments> calculateFreeOptions() {
+        return Stream.of(
+                Arguments.of(PromotionType.ONE_PLUS_ONE, toProductQuantity(4, 0), toQuantity(2)),
+                Arguments.of(PromotionType.TWO_PLUS_ONE, toProductQuantity(4, 0), toQuantity(1)),
+                Arguments.of(PromotionType.TWO_PLUS_ONE, toProductQuantity(6, 0), toQuantity(2))
+        );
+    }
+
     private static ProductQuantity toProductQuantity(int promotion, int normal) {
         return new ProductQuantity(toQuantity(promotion), toQuantity(normal));
     }
