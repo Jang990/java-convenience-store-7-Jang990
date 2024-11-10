@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import product.exception.PromotionException;
 
 import java.util.stream.Stream;
 
@@ -15,7 +16,7 @@ class ProductTest {
     @DisplayName("프로모션 재고가 부족할 때 일반 재고를 사용한다.")
     @ParameterizedTest(name = "{0}을 {1}개 구매 : 상품 재고 - {2}.{3}")
     @MethodSource("buyOptions")
-    void test2(ProductQuantity stock, int buyQuantity, ProductQuantity stockAfterBuy) {
+    void test2(ProductQuantity stock, int buyQuantity, ProductQuantity stockAfterBuy) throws PromotionException {
         Product product = new Product("ABC", toMoney(1000), stock);
         product.purchase(toQuantity(buyQuantity));
 
@@ -52,7 +53,7 @@ class ProductTest {
 
     @DisplayName("구매 후 구매정보를 확인할 수 있어야 한다.")
     @Test
-    void test5() {
+    void test5() throws PromotionException {
         ProductQuantity productStock = toStock(10, 10);
         String productName = "콜라";
         Money productPrice = toMoney(1000);
@@ -67,7 +68,7 @@ class ProductTest {
 
     @DisplayName("프로모션 적용 시 프로모션으로 받은 공짜 상품 수량과 지불해야할 수량을 파악할 수 있다.")
     @Test
-    void test6() {
+    void test6() throws PromotionException {
         Product product = new Product(
                 "콜라", toMoney(1000),
                 toStock(10, 0),

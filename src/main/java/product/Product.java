@@ -1,6 +1,7 @@
 package product;
 
 import money.Money;
+import product.exception.PromotionException;
 
 public class Product {
     private static final String REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE = "0개를 구매할 수 없습니다.";
@@ -27,17 +28,26 @@ public class Product {
         promotion = null;
     }
 
-    public OrderLine purchase(Quantity requested) {
+    public OrderLine purchase(Quantity requested) throws PromotionException {
         if(Quantity.isEmpty(requested))
             throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
 
-        ProductQuantity purchaseQuantity = calculatePurchaseQuantity(requested);
+        Quantity freeQuantity = applyPromotion(requested);
         productQuantity = productQuantity.decrease(requested);
-
-        return new OrderLine(name, price, purchaseQuantity.stock(), Quantity.EMPTY);
+        return new OrderLine(
+                name, price,
+                requested.minus(freeQuantity),
+                freeQuantity
+        );
     }
 
-    private ProductQuantity calculatePurchaseQuantity(Quantity requested) {
+    private Quantity applyPromotion(Quantity requested) throws PromotionException {
+        if(promotion == null)
+            return Quantity.EMPTY;
+        return promotion.calculateFree(getProductQuantityToPurchase(requested));
+    }
+
+    private ProductQuantity getProductQuantityToPurchase(Quantity requested) {
         ProductQuantity quantityAfterPurchase = productQuantity.decrease(requested);
         return productQuantity.calculateDifference(quantityAfterPurchase);
     }
