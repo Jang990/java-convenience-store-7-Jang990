@@ -115,6 +115,24 @@ class PromotionTest {
         );
     }
 
+    @DisplayName("예외를 신경쓰지 않고 증정품 만을 계산할 수 있다.")
+    @ParameterizedTest(name = "{0} 행사. {1}개 구매 : 증정품 {2}개")
+    @MethodSource("freeWithoutExceptionOptions")
+    void test7(PromotionType buyNToGetN, ProductQuantity requested, Quantity expectedFree) {
+        Promotion promotion = PromotionTestBuilder.builder()
+                .type(buyNToGetN)
+                .build();
+
+        assertEquals(promotion.calculateFreeWithoutException(requested), expectedFree);
+    }
+
+    static Stream<Arguments> freeWithoutExceptionOptions() {
+        return Stream.of(
+                Arguments.of(PromotionType.TWO_PLUS_ONE, toProductQuantity(3, 2), toQuantity(1)),
+                Arguments.of(PromotionType.TWO_PLUS_ONE, toProductQuantity(2, 0), toQuantity(0))
+        );
+    }
+
     private static ProductQuantity toProductQuantity(int promotion, int normal) {
         return new ProductQuantity(toQuantity(promotion), toQuantity(normal));
     }

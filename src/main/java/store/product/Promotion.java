@@ -45,6 +45,15 @@ public class Promotion {
                 .times(promotionBundles.getAmount());
     }
 
+    public Quantity calculateFreeWithoutException(ProductQuantity requested) {
+        if(requested.isOnlyNormalQuantity())
+            return Quantity.EMPTY;
+
+        PromotionBundles promotionBundles = requested.bundleUp(promotionType);
+        return promotionType.getFree()
+                .times(promotionBundles.getAmount());
+    }
+
     public String getName() {
         return name;
     }
