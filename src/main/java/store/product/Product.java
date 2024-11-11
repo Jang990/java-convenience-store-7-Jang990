@@ -1,6 +1,7 @@
 package store.product;
 
 import store.money.Money;
+import store.product.exception.MissedPromotionBenefitException;
 import store.product.exception.PromotionException;
 
 public class Product {
@@ -43,7 +44,15 @@ public class Product {
     private Quantity applyPromotion(Quantity requested) throws PromotionException {
         if(promotion == null)
             return Quantity.EMPTY;
-        return promotion.calculateFree(getProductQuantityToPurchase(requested));
+
+        ProductQuantity quantityToPurchase = getProductQuantityToPurchase(requested);
+        try {
+            return promotion.calculateFree(quantityToPurchase);
+        } catch (MissedPromotionBenefitException e) {
+            if(productQuantity.equals(quantityToPurchase))
+                return promotion.calculateFreeWithoutException(quantityToPurchase);
+            throw e;
+        }
     }
 
     private ProductQuantity getProductQuantityToPurchase(Quantity requested) {
@@ -65,5 +74,14 @@ public class Product {
 
     public Promotion getPromotion() {
         return promotion;
+    }
+
+
+
+
+
+
+    public OrderLine purchaseWithoutPromotion(Quantity purchaseQuantity) {
+        return null;
     }
 }

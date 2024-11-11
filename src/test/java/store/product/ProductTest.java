@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import store.product.exception.MissedPromotionBenefitException;
 import store.product.exception.PromotionException;
 
 import java.util.stream.Stream;
@@ -89,6 +90,32 @@ class ProductTest {
                 Arguments.of(10, PromotionTestBuilder.ONE_PLUS_ONE, 10, 5, 5),
                 Arguments.of(10, PromotionTestBuilder.TWO_PLUS_ONE, 6, 4, 2)
         );
+    }
+
+    @DisplayName("프로모션에서 증정품을 놓쳤다는 예외가 발생하면 구매를 중단한다.")
+    @Test
+    void test7() {
+        Product product = new Product(
+                "콜라", toMoney(1000),
+                toStock(3, 0),
+                PromotionTestBuilder.TWO_PLUS_ONE
+        );
+
+        assertThrows(MissedPromotionBenefitException.class, () -> product.purchase(toQuantity(2)));
+    }
+
+    @DisplayName("프로모션에서 증정품을 놓친 예외가 발생했지만 재고가 없다면 예외를 무시하고 구매를 진행한다.")
+    @Test
+    void test8() throws PromotionException {
+        Product product = new Product(
+                "콜라", toMoney(1000),
+                toStock(2, 0),
+                PromotionTestBuilder.TWO_PLUS_ONE
+        );
+
+        OrderLine orderLine = product.purchase(toQuantity(2));
+        assertEquals(orderLine.getProductToPay(), toQuantity(2));
+        assertEquals(orderLine.getFreeProduct(), toQuantity(0));
     }
 
     private static Money toMoney(int amount) {
