@@ -35,16 +35,15 @@ public class StoreFileReader {
 
     public List<Promotion> readPromotions() {
         HeaderFileData fileData = fileReader.read(getPromotionPath());
-        Set<String> promotionNames = findPromotionNames(fileData);
         List<Promotion> result = new LinkedList<>();
-        for (String promotionName : promotionNames) {
+        for (String promotionName : findPromotionNames(fileData)) {
             Map<String,String> promotionData = findUniquePromotionData(fileData, promotionName);
             result.add(create(promotionData));
         }
         return result.stream().toList();
     }
 
-    private Set<String> findPromotionNames(HeaderFileData fileData) {
+    private List<String> findPromotionNames(HeaderFileData fileData) {
         return fileData.findValues(PROMOTION_NAME_HEADER);
     }
 

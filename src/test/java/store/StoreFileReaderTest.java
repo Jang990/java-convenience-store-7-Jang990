@@ -32,10 +32,16 @@ class StoreFileReaderTest {
     @DisplayName("프로모션 파일을 읽어옵니다.")
     @Test
     void test1() {
+        LocalDate date = LocalDate.of(2024, 12, 1);
         StoreFileReader reader = createStoreFileReader(samplePromotionData);
+
         List<Promotion> promotions = reader.readPromotions();
+
         assertEquals(promotions.size(), 2);
-        assertThat(promotions.stream().map(Promotion::toString).toList()).contains("탄산2+1", "반짝할인");
+        assertEquals(promotions.get(0).toString(), "탄산2+1");
+        assertTrue(promotions.get(0).isAvailable(date));
+        assertEquals(promotions.get(1).toString(), "반짝할인");
+        assertFalse(promotions.get(1).isAvailable(date));
     }
 
     @DisplayName("중복된 이름의 프로모션이 있다면 예외가 발생한다.")

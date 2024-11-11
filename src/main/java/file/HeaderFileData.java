@@ -2,8 +2,6 @@ package file;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class HeaderFileData {
     private final List<Map<String, String>> values;
@@ -20,11 +18,12 @@ public class HeaderFileData {
     }
 
 
-    public Set<String> findValues(String header) {
+    public List<String> findValues(String header) {
         return values.stream()
                 .filter(data -> data.containsKey(header))
                 .map(data -> data.get(header))
-                .collect(Collectors.toUnmodifiableSet());
+                .distinct()
+                .toList();
     }
 
     public List<Map<String, String>> getElements() {

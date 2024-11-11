@@ -41,7 +41,7 @@ class HeaderFileDataTest {
     @DisplayName("특정 키의 값들을 확인할 수 있다.")
     @Test
     void test2() {
-        assertEquals(headerFileData.findValues("name"), Set.of("콜라", "사이다"));
+        assertEquals(headerFileData.findValues("name"), List.of("콜라", "사이다"));
     }
 
     @DisplayName("전체 파일 데이터를 확인할 수 있다.")
