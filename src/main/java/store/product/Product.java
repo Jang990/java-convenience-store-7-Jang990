@@ -49,7 +49,7 @@ public class Product {
         try {
             return promotion.calculateFree(quantityToPurchase);
         } catch (MissedPromotionBenefitException e) {
-            if(productQuantity.equals(quantityToPurchase))
+            if(productQuantity.stock().isLessThan(requested.plus(e.getMissingFreeQuantity())))
                 return promotion.calculateFreeWithoutException(quantityToPurchase);
             throw e;
         }
