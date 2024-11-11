@@ -89,27 +89,48 @@ public class StoreFileReader {
         for (String productNames : findNames(fileData)) {
             List<Map<String, String>> productData = fileData.findElementsWithHeader(ID_NAME_HEADER, productNames);
             if(productData.size() == 1)
-                result.add(
-                        new Product(
-                                productData.getFirst().get(ID_NAME_HEADER),
-                                new Money(Integer.parseInt(productData.getFirst().get("price"))),
-                                new ProductQuantity(Quantity.EMPTY, Quantity.of(Integer.parseInt(productData.getFirst().get("quantity"))))
-                        )
-                );
+                result.add(createProduct(productData.getFirst()));
             else
                 result.add(
-                        new Product(
-                                productData.getFirst().get(ID_NAME_HEADER),
-                                new Money(Integer.parseInt(productData.getFirst().get("price"))),
-                                new ProductQuantity(
-                                        Quantity.of(Integer.parseInt(productData.getFirst().get("quantity"))),
-                                        Quantity.of(Integer.parseInt(productData.getLast().get("quantity")))
-                                ),
-                                relatedPromotions.get(0)
-                        )
+                        createProductWithPromotion(relatedPromotions, productData)
                 );
         }
         return result.stream().toList();
+    }
+
+    private Product createProductWithPromotion(List<Promotion> relatedPromotions, List<Map<String, String>> productData) {
+        Map<String, String> normalProductData = productData.getFirst();
+        Map<String, String> promotionProductData = productData.getLast();
+        return new Product(
+                normalProductData.get(ID_NAME_HEADER),
+                toPrice(normalProductData),
+                toProductQuantity(getQuantity(normalProductData), getQuantity(promotionProductData)),
+                relatedPromotions.get(0)
+        );
+    }
+
+    private Product createProduct(Map<String, String> productData) {
+        return new Product(
+                productData.get(ID_NAME_HEADER),
+                toPrice(productData),
+                toProductQuantity(Quantity.EMPTY, getQuantity(productData))
+        );
+    }
+
+    private ProductQuantity toProductQuantity(Quantity promotion, Quantity normal) {
+        return new ProductQuantity(promotion, normal);
+    }
+
+    private Quantity getQuantity(Map<String, String> productData) {
+        return Quantity.of(getProductPriceData(productData));
+    }
+
+    private int getProductPriceData(Map<String, String> productData) {
+        return Integer.parseInt(productData.get("quantity"));
+    }
+
+    private static Money toPrice(Map<String, String> productData) {
+        return new Money(Integer.parseInt(productData.get("price")));
     }
 
     private String getProductPath() {
