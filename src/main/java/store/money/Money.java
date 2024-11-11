@@ -20,9 +20,24 @@ public class Money {
     public Money plus(Money money) {
         return new Money(amount + money.amount);
     }
+    public Money minus(Money money) {
+        return new Money(amount - money.amount);
+    }
 
     public Money times(int multiplier) {
         return new Money(amount * multiplier);
+    }
+
+    public Money divide(int divisor) {
+        return new Money(amount / divisor);
+    }
+
+    public boolean isLessThan(Money money) {
+        return amount < money.amount;
+    }
+
+    public boolean isGreaterThan(Money money) {
+        return amount > money.amount;
     }
 
     @Override
