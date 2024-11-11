@@ -39,10 +39,6 @@ public class Money {
         return new Money(amount / divisor);
     }
 
-    public boolean isLessThan(Money money) {
-        return amount < money.amount;
-    }
-
     public boolean isGreaterThan(Money money) {
         return amount > money.amount;
     }
