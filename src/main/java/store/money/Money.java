@@ -1,5 +1,7 @@
 package store.money;
 
+import store.product.Quantity;
+
 import java.util.Objects;
 
 public class Money {
@@ -20,12 +22,17 @@ public class Money {
     public Money plus(Money money) {
         return new Money(amount + money.amount);
     }
+
     public Money minus(Money money) {
         return new Money(amount - money.amount);
     }
 
     public Money times(int multiplier) {
         return new Money(amount * multiplier);
+    }
+
+    public Money times(Quantity quantity) {
+        return new Money(amount * quantity.amount);
     }
 
     public Money divide(int divisor) {

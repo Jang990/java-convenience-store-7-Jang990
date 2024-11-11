@@ -31,4 +31,20 @@ public class OrderLine {
     public Quantity getFreeProduct() {
         return freeProduct;
     }
+
+    public Quantity getProductAmount() {
+        return productToPay.plus(freeProduct);
+    }
+
+    public Money getTotalPrice() {
+        return productPrice.times(getProductAmount());
+    }
+
+    public Money getFreePrice() {
+        return productPrice.times(freeProduct);
+    }
+
+    public Money getActualPrice() {
+        return productPrice.times(productToPay);
+    }
 }

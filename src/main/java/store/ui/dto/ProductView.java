@@ -6,6 +6,7 @@ import store.product.Quantity;
 
 public class ProductView {
     private static final String EMPTY = "";
+    private static final String QUANTITY_UNIT = "개";
 
     private final String name;
     private final Money price;
@@ -49,6 +50,6 @@ public class ProductView {
     private String toStockString(Quantity quantity) {
         if(quantity.equals(Quantity.EMPTY))
             return "재고없음";
-        return quantity.toString();
+        return quantity.toString().concat(QUANTITY_UNIT);
     }
 }
