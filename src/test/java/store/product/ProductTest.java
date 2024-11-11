@@ -1,5 +1,7 @@
 package store.product;
 
+import org.junit.jupiter.api.BeforeEach;
+import store.basic.TimeHolderStub;
 import store.money.Money;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,17 +12,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 import store.product.exception.MissedPromotionBenefitException;
 import store.product.exception.PromotionException;
 
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductTest {
+    private static final LocalDate now = LocalDate.now();
     @DisplayName("프로모션 재고가 부족할 때 일반 재고를 사용한다.")
     @ParameterizedTest(name = "{0}을 {1}개 구매 : 상품 재고 - {2}.{3}")
     @MethodSource("buyOptions")
     void test2(ProductQuantity stock, int buyQuantity, ProductQuantity stockAfterBuy) throws PromotionException {
+
         Product product = new Product("ABC", toMoney(1000), stock);
-        product.purchase(toQuantity(buyQuantity));
+        product.purchase(timeHolderStub(), toQuantity(buyQuantity));
 
         assertEquals(stockAfterBuy, product.getStock());
     }
@@ -39,7 +44,7 @@ class ProductTest {
     void test3() {
         ProductQuantity productStock = toStock(1, 0);
         Product product = new Product("ABC", toMoney(1000), productStock);
-        assertThrows(IllegalArgumentException.class, () -> product.purchase(toQuantity(0)));
+        assertThrows(IllegalArgumentException.class, () -> product.purchase(timeHolderStub(), toQuantity(0)));
     }
 
     @DisplayName("상품의 가격, 재고, 이름을 설정할 수 있다.")
@@ -61,7 +66,7 @@ class ProductTest {
         Money productPrice = toMoney(1000);
         Product product = new Product(productName, productPrice, productStock);
 
-        OrderLine result = product.purchase(toQuantity(10));
+        OrderLine result = product.purchase(timeHolderStub(), toQuantity(10));
 
         assertEquals(productName, result.getProductName());
         assertEquals(productPrice, result.getProductPrice());
@@ -79,7 +84,7 @@ class ProductTest {
                 promotion
         );
 
-        OrderLine result = product.purchase(toQuantity(purchase));
+        OrderLine result = product.purchase(timeHolderStub(LocalDate.now()), toQuantity(purchase));
 
         Assertions.assertEquals(toQuantity(expectedToPay), result.getProductToPay());
         Assertions.assertEquals(toQuantity(expectedFree), result.getFreeProduct());
@@ -101,7 +106,7 @@ class ProductTest {
                 PromotionTestBuilder.TWO_PLUS_ONE
         );
 
-        assertThrows(MissedPromotionBenefitException.class, () -> product.purchase(toQuantity(2)));
+        assertThrows(MissedPromotionBenefitException.class, () -> product.purchase(timeHolderStub(now), toQuantity(2)));
     }
 
     @DisplayName("프로모션에서 증정품을 놓친 예외가 발생했지만 재고가 없다면 예외를 무시하고 구매를 진행한다.")
@@ -113,7 +118,7 @@ class ProductTest {
                 PromotionTestBuilder.TWO_PLUS_ONE
         );
 
-        OrderLine orderLine = product.purchase(toQuantity(2));
+        OrderLine orderLine = product.purchase(timeHolderStub(), toQuantity(2));
         assertEquals(orderLine.getProductToPay(), toQuantity(2));
         assertEquals(orderLine.getFreeProduct(), toQuantity(0));
     }
@@ -127,7 +132,7 @@ class ProductTest {
                 PromotionTestBuilder.TWO_PLUS_ONE
         );
 
-        OrderLine orderLine = product.purchase(toQuantity(2));
+        OrderLine orderLine = product.purchase(timeHolderStub(), toQuantity(2));
         assertEquals(orderLine.getProductToPay(), toQuantity(2));
         assertEquals(orderLine.getFreeProduct(), toQuantity(0));
     }
@@ -141,5 +146,15 @@ class ProductTest {
 
     private static Quantity toQuantity(int quantity) {
         return new Quantity(quantity);
+    }
+
+    private static TimeHolderStub timeHolderStub() {
+        return new TimeHolderStub();
+    }
+
+    private static TimeHolderStub timeHolderStub(LocalDate now) {
+        TimeHolderStub result = new TimeHolderStub();
+        result.setTestNow(now);
+        return result;
     }
 }

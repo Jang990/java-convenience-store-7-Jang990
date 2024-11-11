@@ -1,5 +1,6 @@
 package store.product;
 
+import store.basic.TimeHolder;
 import store.money.Money;
 import store.product.exception.MissedPromotionBenefitException;
 import store.product.exception.PromotionException;
@@ -28,11 +29,11 @@ public class Product {
         promotion = null;
     }
 
-    public OrderLine purchase(Quantity requested) throws PromotionException {
+    public OrderLine purchase(TimeHolder timeHolder, Quantity requested) throws PromotionException {
         if(Quantity.isEmpty(requested))
             throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
 
-        Quantity freeQuantity = applyPromotion(requested);
+        Quantity freeQuantity = applyPromotion(timeHolder, requested);
         productQuantity = productQuantity.decrease(requested);
         return new OrderLine(
                 name, price,
@@ -41,11 +42,11 @@ public class Product {
         );
     }
 
-    public OrderLine purchaseWithoutPromotionException(Quantity requested) {
+    public OrderLine purchaseWithoutPromotionException(TimeHolder timeHolder, Quantity requested) {
         if(Quantity.isEmpty(requested))
             throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
 
-        Quantity freeQuantity = applyPromotionWithoutException(requested);
+        Quantity freeQuantity = applyPromotionWithoutException(timeHolder, requested);
         productQuantity = productQuantity.decrease(requested);
         return new OrderLine(
                 name, price,
@@ -84,16 +85,16 @@ public class Product {
         return promotion.getName();
     }
 
-    private Quantity applyPromotionWithoutException(Quantity requested) {
-        if(promotion == null)
+    private Quantity applyPromotionWithoutException(TimeHolder timeHolder, Quantity requested) {
+        if(promotion == null || !promotion.isAvailable(timeHolder.now()))
             return Quantity.EMPTY;
 
         ProductQuantity quantityToPurchase = getProductQuantityToPurchase(requested);
         return promotion.calculateFreeWithoutException(quantityToPurchase);
     }
 
-    private Quantity applyPromotion(Quantity requested) throws PromotionException {
-        if(promotion == null)
+    private Quantity applyPromotion(TimeHolder timeHolder, Quantity requested) throws PromotionException {
+        if(promotion == null || !promotion.isAvailable(timeHolder.now()))
             return Quantity.EMPTY;
 
         try {
