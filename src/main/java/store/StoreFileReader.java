@@ -100,19 +100,19 @@ public class StoreFileReader {
     }
 
     private Product createProduct(List<Promotion> relatedPromotions, List<Map<String, String>> productData) {
-        if (productData.size() == 1)
-            return createProduct(productData.getFirst());
-        else
-            return createProductWithPromotion(relatedPromotions, productData);
+        if (productData.size() == 1
+                && isEmptyProductPromotionName(productData.getFirst()))
+            return createWithoutPromotion(productData.getFirst());
+
+        return createWithPromotion(relatedPromotions, productData);
     }
 
-    private Product createProductWithPromotion(List<Promotion> relatedPromotions, List<Map<String, String>> productData) {
-        Map<String, String> normalProductData = findNormalProductData(productData);
+    private Product createWithPromotion(List<Promotion> relatedPromotions, List<Map<String, String>> productData) {
         Map<String, String> productWithPromotionData = findPromotionProductData(productData);
         return new Product(
-                normalProductData.get(ID_NAME_HEADER),
-                toPrice(normalProductData),
-                toProductQuantity(getQuantity(normalProductData), getQuantity(productWithPromotionData)),
+                productWithPromotionData.get(ID_NAME_HEADER),
+                toPrice(productWithPromotionData),
+                toProductQuantity(getQuantity(productWithPromotionData), findNormalProductQuantity(productData)),
                 finrPromotion(relatedPromotions, getProductPromotionName(productWithPromotionData))
         );
     }
@@ -126,17 +126,23 @@ public class StoreFileReader {
 
     private Map<String, String> findPromotionProductData(List<Map<String, String>> productData) {
         return productData.stream()
-                .filter(data -> !getProductPromotionName(data).equals(NULL_DATA))
+                .filter(data -> !isEmptyProductPromotionName(data))
                 .toList().getFirst();
     }
 
-    private Map<String, String> findNormalProductData(List<Map<String, String>> productData) {
+    private boolean isEmptyProductPromotionName(Map<String, String> data) {
+        return getProductPromotionName(data).equals(NULL_DATA);
+    }
+
+    private Quantity findNormalProductQuantity(List<Map<String, String>> productData) {
         return productData.stream()
-                .filter(data -> getProductPromotionName(data).equals(NULL_DATA))
-                .toList().getFirst();
+                .filter(this::isEmptyProductPromotionName)
+                .map(this::getQuantity)
+                .findFirst()
+                .orElse(Quantity.EMPTY);
     }
 
-    private Product createProduct(Map<String, String> productData) {
+    private Product createWithoutPromotion(Map<String, String> productData) {
         return new Product(
                 productData.get(ID_NAME_HEADER),
                 toPrice(productData),

@@ -52,6 +52,7 @@ class StoreFileReaderTest {
             "quantity", "7",
             "promotion", "null"
     );
+
     public final List<Map<String, String>> sampleProductData = List.of(product1, product2, product3);
 
     @DisplayName("프로모션 파일을 읽어옵니다.")
@@ -100,6 +101,27 @@ class StoreFileReaderTest {
         assertEquals(products.get(0).getStock(), new ProductQuantity(new Quantity(10), new Quantity(10)));
         assertEquals(products.get(1).getName(), "사이다");
         assertNull(products.get(1).getPromotion());
+    }
+
+    @DisplayName("프로모션 상품만 있어도 읽어올 수 있습니다.")
+    @Test
+    void test5() {
+        Map<String, String> product4 = Map.of(
+                "name", "오렌지주스",
+                "price", "1800",
+                "quantity", "9",
+                "promotion", "반짝할인"
+        );
+
+        List<Promotion> promotions = createStoreFileReader(samplePromotionData).readPromotions();
+        StoreFileReader reader = createStoreFileReader(List.of(product4));
+
+        List<Product> products = reader.readProduct(promotions);
+
+        assertEquals(products.get(0).getName(), "오렌지주스");
+        assertEquals(products.get(0).getPrice(), new Money(1800));
+        assertNotNull(products.get(0).getPromotion());
+        assertEquals(products.get(0).getStock(), new ProductQuantity(new Quantity(9), Quantity.EMPTY));
     }
 
     private static StoreFileReader createStoreFileReader(List<Map<String, String>> sample) {
