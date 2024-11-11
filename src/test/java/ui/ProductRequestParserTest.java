@@ -22,7 +22,6 @@ class ProductRequestParserTest {
         assertEquals(result.get(0).getProductName(), "콜라");
         assertEquals(result.get(0).getQuantity(), 3);
 
-        System.out.println(result.get(1));
         assertEquals(result.get(1).getProductName(), "에너지바");
         assertEquals(result.get(1).getQuantity(), 5);
     }
