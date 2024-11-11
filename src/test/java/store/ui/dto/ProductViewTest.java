@@ -20,8 +20,8 @@ class ProductViewTest {
         ProductView productView = new ProductView(product);
 
         assertThat(productView.toString()).contains(
-                "- 콜라 1,000원 재고없음 탄산 2+1",
-                "- 콜라 1,000원 10개"
+                "- 콜라 1,000원 10개 탄산 2+1",
+                "- 콜라 1,000원 재고 없음"
         );
     }
 

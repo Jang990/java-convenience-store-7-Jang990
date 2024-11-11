@@ -36,8 +36,8 @@ public class ProductView {
     @Override
     public String toString() {
         String format = "- %s %s원 %s %s";
-        String normalLine = format.formatted(name, price, toStockString(normalStock), toPromotionNameString());
-        String promotionLine = format.formatted(name, price, toStockString(promotionStock), EMPTY);
+        String normalLine = format.formatted(name, price, toStockString(normalStock), EMPTY);
+        String promotionLine = format.formatted(name, price, toStockString(promotionStock), toPromotionNameString());
         return normalLine.concat("\n").concat(promotionLine).concat("\n");
     }
 
@@ -49,7 +49,7 @@ public class ProductView {
 
     private String toStockString(Quantity quantity) {
         if(quantity.equals(Quantity.EMPTY))
-            return "재고없음";
+            return "재고 없음";
         return quantity.toString().concat(QUANTITY_UNIT);
     }
 }
