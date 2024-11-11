@@ -14,10 +14,10 @@ public class StoreFileReader {
     private static final String NOT_FOUND_HEADER_ERROR_MESSAGE = "헤더가 존재하지 않습니다.";
     private static final String ELEMENT_DELIMITER_REGEX = Pattern.quote(",");
 
-    public List<Map<String, String>> read(String path) {
+    public StoreFileData read(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             List<String> headers = readHeaders(br);
-            return readElements(br, headers);
+            return new StoreFileData(readElements(br, headers));
         } catch (FileNotFoundException e) {
             throw new IllegalArgumentException(FILE_NOT_FOUND_ERROR_MESSAGE, e);
         } catch (IOException e) {

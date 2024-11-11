@@ -33,10 +33,9 @@ class StoreFileReaderTest {
     void test1(String fileName, List<Map<String,String>> expected) {
         String filePath = toTestFilePath(fileName);
 
-        List<Map<String, String>> result = reader.read(filePath);
+        StoreFileData result = reader.read(filePath);
 
-        assertEquals(result.size(), expected.size());
-        assertEquals(result, expected);
+        assertEquals(result.getElements(), expected);
     }
 
     static Stream<Arguments> readingFileOptions() {
