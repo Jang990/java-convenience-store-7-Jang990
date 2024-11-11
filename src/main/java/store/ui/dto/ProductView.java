@@ -13,6 +13,17 @@ public class ProductView {
     private final Quantity normalStock;
     private final String promotionName;
 
+    public ProductView(
+            String name, Money price,
+            Quantity promotionStock, Quantity normalStock,
+            String promotionName) {
+        this.name = name;
+        this.price = price;
+        this.promotionStock = promotionStock;
+        this.normalStock = normalStock;
+        this.promotionName = promotionName;
+    }
+
     public ProductView(Product product) {
         this.name = product.getName();
         this.price = product.getPrice();
@@ -26,7 +37,7 @@ public class ProductView {
         String format = "- %s %s원 %s %s";
         String normalLine = format.formatted(name, price, toStockString(normalStock), toPromotionNameString());
         String promotionLine = format.formatted(name, price, toStockString(promotionStock), EMPTY);
-        return normalLine.concat("\n").concat(promotionLine);
+        return normalLine.concat("\n").concat(promotionLine).concat("\n");
     }
 
     private String toPromotionNameString() {
