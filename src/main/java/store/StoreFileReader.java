@@ -47,6 +47,17 @@ public class StoreFileReader {
         return result.stream().toList();
     }
 
+    public List<Product> readProduct(List<Promotion> relatedPromotions) {
+        HeaderFileData fileData = fileReader.read(getProductPath());
+        List<Product> result = new LinkedList<>();
+        for (String productNames : findNames(fileData)) {
+            List<Map<String, String>> productData = fileData.findElementsWithHeader(ID_NAME_HEADER, productNames);
+            Product product = createProduct(relatedPromotions, productData);
+            result.add(product);
+        }
+        return result.stream().toList();
+    }
+
     private List<String> findNames(HeaderFileData fileData) {
         return fileData.findValues(ID_NAME_HEADER);
     }
@@ -83,20 +94,8 @@ public class StoreFileReader {
         }
     }
 
-
     private String getPromotionPath() {
         return FILE_PATH.concat(PROMOTION_FILE_NAME);
-    }
-
-    public List<Product> readProduct(List<Promotion> relatedPromotions) {
-        HeaderFileData fileData = fileReader.read(getProductPath());
-        List<Product> result = new LinkedList<>();
-        for (String productNames : findNames(fileData)) {
-            List<Map<String, String>> productData = fileData.findElementsWithHeader(ID_NAME_HEADER, productNames);
-            Product product = createProduct(relatedPromotions, productData);
-            result.add(product);
-        }
-        return result.stream().toList();
     }
 
     private Product createProduct(List<Promotion> relatedPromotions, List<Map<String, String>> productData) {
