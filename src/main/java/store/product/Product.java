@@ -41,23 +41,17 @@ public class Product {
         );
     }
 
-    private Quantity applyPromotion(Quantity requested) throws PromotionException {
-        if(promotion == null)
-            return Quantity.EMPTY;
+    public OrderLine purchaseWithoutPromotionException(Quantity requested) {
+        if(Quantity.isEmpty(requested))
+            throw new IllegalArgumentException(REQUESTING_EMPTY_QUANTITY_ERROR_MESSAGE);
 
-        ProductQuantity quantityToPurchase = getProductQuantityToPurchase(requested);
-        try {
-            return promotion.calculateFree(quantityToPurchase);
-        } catch (MissedPromotionBenefitException e) {
-            if(productQuantity.stock().isLessThan(requested.plus(e.getMissingFreeQuantity())))
-                return promotion.calculateFreeWithoutException(quantityToPurchase);
-            throw e;
-        }
-    }
-
-    private ProductQuantity getProductQuantityToPurchase(Quantity requested) {
-        ProductQuantity quantityAfterPurchase = productQuantity.decrease(requested);
-        return productQuantity.calculateDifference(quantityAfterPurchase);
+        Quantity freeQuantity = applyPromotionWithoutException(requested);
+        productQuantity = productQuantity.decrease(requested);
+        return new OrderLine(
+                name, price,
+                requested.minus(freeQuantity),
+                freeQuantity
+        );
     }
 
     public ProductQuantity getStock() {
@@ -76,12 +70,34 @@ public class Product {
         return promotion;
     }
 
+    private Quantity applyPromotionWithoutException(Quantity requested) {
+        if(promotion == null)
+            return Quantity.EMPTY;
 
+        ProductQuantity quantityToPurchase = getProductQuantityToPurchase(requested);
+        return promotion.calculateFreeWithoutException(quantityToPurchase);
+    }
 
+    private Quantity applyPromotion(Quantity requested) throws PromotionException {
+        if(promotion == null)
+            return Quantity.EMPTY;
 
+        try {
+            return promotion.calculateFree(getProductQuantityToPurchase(requested));
+        } catch (MissedPromotionBenefitException e) {
+            return handleMissedException(requested, e);
+        }
+    }
 
+    private Quantity handleMissedException(Quantity requested, MissedPromotionBenefitException e) throws MissedPromotionBenefitException {
+        ProductQuantity quantityToPurchase = getProductQuantityToPurchase(requested);
+        if(productQuantity.lacksPromotionStock(requested.plus(e.getMissingFreeQuantity())))
+            return promotion.calculateFreeWithoutException(quantityToPurchase);
+        throw e;
+    }
 
-    public OrderLine purchaseWithoutPromotion(Quantity purchaseQuantity) {
-        return null;
+    private ProductQuantity getProductQuantityToPurchase(Quantity requested) {
+        ProductQuantity quantityAfterPurchase = productQuantity.decrease(requested);
+        return productQuantity.calculateDifference(quantityAfterPurchase);
     }
 }

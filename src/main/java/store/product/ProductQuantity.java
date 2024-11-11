@@ -61,6 +61,10 @@ public class ProductQuantity {
         return normal;
     }
 
+    protected boolean lacksPromotionStock(Quantity quantity) {
+        return promotion.isLessThan(quantity);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

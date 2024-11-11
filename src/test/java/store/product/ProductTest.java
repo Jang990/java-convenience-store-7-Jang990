@@ -118,6 +118,20 @@ class ProductTest {
         assertEquals(orderLine.getFreeProduct(), toQuantity(0));
     }
 
+    @DisplayName("프로모션에서 증정품을 놓친 예외가 발생했지만 프로모션을 적용할 재고가 없다면 구매를 종료한다.")
+    @Test
+    void test9() throws PromotionException {
+        Product product = new Product(
+                "콜라", toMoney(1000),
+                toStock(2, 1),
+                PromotionTestBuilder.TWO_PLUS_ONE
+        );
+
+        OrderLine orderLine = product.purchase(toQuantity(2));
+        assertEquals(orderLine.getProductToPay(), toQuantity(2));
+        assertEquals(orderLine.getFreeProduct(), toQuantity(0));
+    }
+
     private static Money toMoney(int amount) {
         return new Money(amount);
     }
