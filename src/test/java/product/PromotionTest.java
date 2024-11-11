@@ -40,7 +40,7 @@ class PromotionTest {
                 .name(promotionName)
                 .build();
 
-        assertEquals(promotion.toString(), promotionName);
+        assertEquals(promotion.getName(), promotionName);
     }
 
     @DisplayName("프로모션 무료 제공 수량이 있다면 예외가 발생하고 무료 제공 수량을 공지한다.")

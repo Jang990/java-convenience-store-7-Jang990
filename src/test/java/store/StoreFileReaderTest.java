@@ -38,9 +38,9 @@ class StoreFileReaderTest {
         List<Promotion> promotions = reader.readPromotions();
 
         assertEquals(promotions.size(), 2);
-        assertEquals(promotions.get(0).toString(), "탄산2+1");
+        assertEquals(promotions.get(0).getName(), "탄산2+1");
         assertTrue(promotions.get(0).isAvailable(date));
-        assertEquals(promotions.get(1).toString(), "반짝할인");
+        assertEquals(promotions.get(1).getName(), "반짝할인");
         assertFalse(promotions.get(1).isAvailable(date));
     }
 

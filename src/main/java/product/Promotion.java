@@ -24,11 +24,6 @@ public class Promotion {
         return duration.isWithIn(now);
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
     public Quantity calculateFree(ProductQuantity requested) throws PromotionException {
         if(requested.isOnlyNormalQuantity())
             return Quantity.EMPTY;
@@ -48,5 +43,9 @@ public class Promotion {
 
         return promotionType.getFree()
                 .times(promotionBundles.getAmount());
+    }
+
+    public String getName() {
+        return name;
     }
 }
