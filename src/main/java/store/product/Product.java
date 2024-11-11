@@ -58,6 +58,14 @@ public class Product {
         return productQuantity;
     }
 
+    public Quantity getNormalStock() {
+        return productQuantity.getNormal();
+    }
+
+    public Quantity getPromotionStock() {
+        return productQuantity.getPromotion();
+    }
+
     public String getName() {
         return name;
     }
@@ -68,6 +76,12 @@ public class Product {
 
     public Promotion getPromotion() {
         return promotion;
+    }
+
+    public String getPromotionName() {
+        if(promotion == null)
+            return null;
+        return promotion.getName();
     }
 
     private Quantity applyPromotionWithoutException(Quantity requested) {

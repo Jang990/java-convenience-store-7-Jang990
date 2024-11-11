@@ -6,6 +6,7 @@ public class Quantity {
     private static final int EMPTY_AMOUNT = 0;
     private static final String MINUS_QUANTITY_ERROR_MESSAGE = "수량은 마이너스가 될 수 없습니다.";
     public static final Quantity EMPTY = new Quantity(EMPTY_AMOUNT);
+    private static final String QUANTITY_UNIT = "개";
 
     public static boolean isEmpty(Quantity quantity) {
         return quantity.equals(EMPTY);
@@ -62,6 +63,6 @@ public class Quantity {
 
     @Override
     public String toString() {
-        return String.valueOf(amount);
+        return String.valueOf(amount).concat(QUANTITY_UNIT);
     }
 }

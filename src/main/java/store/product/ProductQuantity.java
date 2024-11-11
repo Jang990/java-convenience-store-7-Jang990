@@ -61,6 +61,10 @@ public class ProductQuantity {
         return normal;
     }
 
+    protected Quantity getPromotion() {
+        return promotion;
+    }
+
     protected boolean lacksPromotionStock(Quantity quantity) {
         return promotion.isLessThan(quantity);
     }
