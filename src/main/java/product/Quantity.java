@@ -11,6 +11,10 @@ public class Quantity {
         return quantity.equals(EMPTY);
     }
 
+    public static Quantity of(int amount) {
+        return new Quantity(amount);
+    }
+
     public final int amount;
 
     public Quantity(int amount) {

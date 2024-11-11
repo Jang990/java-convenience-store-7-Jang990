@@ -2,23 +2,22 @@ package store;
 
 import file.HeaderFileData;
 import file.HeaderFileReader;
-import product.Promotion;
-import product.PromotionDuration;
-import product.PromotionType;
+import money.Money;
+import product.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class StoreFileReader {
     private static final String FILE_PATH = "src/main/resources/";
     private static final String PROMOTION_FILE_NAME = "promotions.md";
     private static final String PRODUCT_FILE_NAME = "products.md";
 
-    private static final String PROMOTION_NAME_HEADER = "name";
+    private static final String ID_NAME_HEADER = "name";
+
     private static final String PROMOTION_REQUIRED_HEADER = "buy";
     private static final String PROMOTION_FREE_HEADER = "get";
     private static final String PROMOTION_DURATION_START_HEADER = "start_date";
@@ -36,19 +35,19 @@ public class StoreFileReader {
     public List<Promotion> readPromotions() {
         HeaderFileData fileData = fileReader.read(getPromotionPath());
         List<Promotion> result = new LinkedList<>();
-        for (String promotionName : findPromotionNames(fileData)) {
+        for (String promotionName : findNames(fileData)) {
             Map<String,String> promotionData = findUniquePromotionData(fileData, promotionName);
             result.add(create(promotionData));
         }
         return result.stream().toList();
     }
 
-    private List<String> findPromotionNames(HeaderFileData fileData) {
-        return fileData.findValues(PROMOTION_NAME_HEADER);
+    private List<String> findNames(HeaderFileData fileData) {
+        return fileData.findValues(ID_NAME_HEADER);
     }
 
     private Map<String, String> findUniquePromotionData(HeaderFileData fileData, String promotionName) {
-        List<Map<String, String>> result = fileData.findElementsWithHeader(PROMOTION_NAME_HEADER, promotionName);
+        List<Map<String, String>> result = fileData.findElementsWithHeader(ID_NAME_HEADER, promotionName);
         if(result.size() >= DUPLICATED_PROMOTION_SIZE)
             throw new IllegalArgumentException(DUPLICATED_PROMOTION_NAME_ERROR_MESSAGE);
         return result.getFirst();
@@ -58,7 +57,7 @@ public class StoreFileReader {
         return new Promotion(
                 toPromotionType(promotionData),
                 toPromotionDuration(promotionData),
-                promotionData.get(PROMOTION_NAME_HEADER)
+                promotionData.get(ID_NAME_HEADER)
         );
     }
 
@@ -84,4 +83,36 @@ public class StoreFileReader {
         return FILE_PATH.concat(PROMOTION_FILE_NAME);
     }
 
+    public List<Product> readProduct(List<Promotion> relatedPromotions) {
+        HeaderFileData fileData = fileReader.read(getProductPath());
+        List<Product> result = new LinkedList<>();
+        for (String productNames : findNames(fileData)) {
+            List<Map<String, String>> productData = fileData.findElementsWithHeader(ID_NAME_HEADER, productNames);
+            if(productData.size() == 1)
+                result.add(
+                        new Product(
+                                productData.getFirst().get(ID_NAME_HEADER),
+                                new Money(Integer.parseInt(productData.getFirst().get("price"))),
+                                new ProductQuantity(Quantity.EMPTY, Quantity.of(Integer.parseInt(productData.getFirst().get("quantity"))))
+                        )
+                );
+            else
+                result.add(
+                        new Product(
+                                productData.getFirst().get(ID_NAME_HEADER),
+                                new Money(Integer.parseInt(productData.getFirst().get("price"))),
+                                new ProductQuantity(
+                                        Quantity.of(Integer.parseInt(productData.getFirst().get("quantity"))),
+                                        Quantity.of(Integer.parseInt(productData.getLast().get("quantity")))
+                                ),
+                                relatedPromotions.get(0)
+                        )
+                );
+        }
+        return result.stream().toList();
+    }
+
+    private String getProductPath() {
+        return FILE_PATH.concat(PRODUCT_FILE_NAME);
+    }
 }

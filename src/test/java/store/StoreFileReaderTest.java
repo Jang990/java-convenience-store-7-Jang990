@@ -34,12 +34,6 @@ class StoreFileReaderTest {
             )
     );
 
-    /*
-    name,price,quantity,promotion
-    콜라,1000,10,탄산2+1
-    콜라,1000,10,null
-    사이다,1000,8,탄산2+1
-     */
     public final Map<String, String> product1 = Map.of(
             "name", "콜라",
             "price", "1000",
@@ -102,8 +96,10 @@ class StoreFileReaderTest {
         assertEquals(products.size(), 2);
         assertEquals(products.get(0).getName(), "콜라");
         assertEquals(products.get(0).getPrice(), new Money(1000));
+        assertNotNull(products.get(0).getPromotion());
         assertEquals(products.get(0).getStock(), new ProductQuantity(new Quantity(10), new Quantity(10)));
         assertEquals(products.get(1).getName(), "사이다");
+        assertNull(products.get(1).getPromotion());
     }
 
     private static StoreFileReader createStoreFileReader(List<Map<String, String>> sample) {
