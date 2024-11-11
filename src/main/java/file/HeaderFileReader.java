@@ -7,17 +7,17 @@ import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class StoreFileReader {
+public class HeaderFileReader {
     private static final String HEADER_ELEMENT_SIZE_MISMATCH_MESSAGE = "헤더의 수와 요소의 수가 맞지 않습니다.";
     private static final String IOEXCEPTION_ERROR_MESSAGE = "IOException 발생";
     private static final String FILE_NOT_FOUND_ERROR_MESSAGE = "파일을 찾을 수 없음";
     private static final String NOT_FOUND_HEADER_ERROR_MESSAGE = "헤더가 존재하지 않습니다.";
     private static final String ELEMENT_DELIMITER_REGEX = Pattern.quote(",");
 
-    public StoreFileData read(String path) {
+    public HeaderFileData read(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             List<String> headers = readHeaders(br);
-            return new StoreFileData(readElements(br, headers));
+            return new HeaderFileData(readElements(br, headers));
         } catch (FileNotFoundException e) {
             throw new IllegalArgumentException(FILE_NOT_FOUND_ERROR_MESSAGE, e);
         } catch (IOException e) {

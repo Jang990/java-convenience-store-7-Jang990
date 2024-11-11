@@ -13,18 +13,18 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StoreFileReaderTest {
+class HeaderFileReaderTest {
     private static final String TEST_RESOURCE_PREFIX = "src/test/resources/";
 
     private static String toTestFilePath(String fileName) {
         return TEST_RESOURCE_PREFIX.concat(fileName);
     }
 
-    private StoreFileReader reader;
+    private HeaderFileReader reader;
 
     @BeforeEach
     void beforeEach() {
-        reader = new StoreFileReader();
+        reader = new HeaderFileReader();
     }
 
     @DisplayName("스토어 파일을 읽어올 수 있다.")
@@ -33,7 +33,7 @@ class StoreFileReaderTest {
     void test1(String fileName, List<Map<String,String>> expected) {
         String filePath = toTestFilePath(fileName);
 
-        StoreFileData result = reader.read(filePath);
+        HeaderFileData result = reader.read(filePath);
 
         assertEquals(result.getElements(), expected);
     }

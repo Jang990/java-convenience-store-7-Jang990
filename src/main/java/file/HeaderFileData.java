@@ -5,25 +5,25 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class StoreFileData {
+public class HeaderFileData {
     private final List<Map<String, String>> values;
 
-    protected StoreFileData(List<Map<String, String>> fileData) {
+    protected HeaderFileData(List<Map<String, String>> fileData) {
         this.values = fileData;
     }
 
-    public List<Map<String,String>> findElementsContainingEntry(String entryKey, String entryValue) {
+    public List<Map<String,String>> findElementsWithHeader(String header, String value) {
         return values.stream()
-                .filter(data -> data.get(entryKey).equals(entryValue))
+                .filter(data -> data.get(header).equals(value))
                 .map(Map::copyOf)
                 .toList();
     }
 
 
-    public Set<String> findValues(String key) {
+    public Set<String> findValues(String header) {
         return values.stream()
-                .filter(data -> data.containsKey(key))
-                .map(data -> data.get(key))
+                .filter(data -> data.containsKey(header))
+                .map(data -> data.get(header))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
