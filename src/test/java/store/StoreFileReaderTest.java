@@ -1,19 +1,18 @@
 package store;
 
-import file.HeaderFileReaderStub;
-import money.Money;
+import store.file.HeaderFileReaderStub;
+import store.money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import product.Product;
-import product.ProductQuantity;
-import product.Promotion;
-import product.Quantity;
+import store.product.Product;
+import store.product.ProductQuantity;
+import store.product.Promotion;
+import store.product.Quantity;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StoreFileReaderTest {

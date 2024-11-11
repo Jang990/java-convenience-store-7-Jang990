@@ -1,9 +1,9 @@
 package store;
 
-import file.HeaderFileData;
-import file.HeaderFileReader;
-import money.Money;
-import product.*;
+import store.file.HeaderFileData;
+import store.file.HeaderFileReader;
+import store.money.Money;
+import store.product.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
